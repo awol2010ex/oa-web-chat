@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oawebchat.sso">
+<!--  密码验证 -->
+	<select id="authDB" parameterType="map" resultType="int">
+	SELECT  count(1)  as A  from VW_CAS_USERS_DB_NOW  where login_id=#{login_id}  and  USER_PSWD =#{password}
+	   
+	
+	</select>
+	
+	<!--  取得域名 -->
+	<select id="getDomainName" parameterType="map" resultType="map">
+	SELECT d.DOMAIN_NAME  
+			 FROM             
+				 (                  
+			   SELECT   
+				             d.*,   
+				 ROW_NUMBER() OVER (PARTITION BY UCASE(DOMAIN_NAME) ORDER BY ROW_CREATED DESC, DOMAIN_ID DESC) AS ROW_NUM  
+			 FROM VW_CAS_MSAD_DOMAIN_DEF_T d  
+			 WHERE EXISTS (  SELECT 1 
+			 FROM VW_CAS_MSAD_DOMAIN_LIST_T r  
+			  WHERE d.DOMAIN_NAME=r.DOMAIN_NAME 
+			   )     ) d   
+	   
+	
+	</select>
+	
+	<!-- 取得验证服务器列表 -->
+	<select id="getSvrList" parameterType="map" resultType="map">
+		
+	 SELECT 
+				 r.HOST_DNS_NAME AS SVR_NAME, 
+				r.HOST_IP_ADDRESS AS SVR_IP 
+				FROM VW_CAS_MSAD_DOMAIN_LIST_T r  
+				 WHERE r.DOMAIN_NAME=#{DOMAIN_NAME}
+				ORDER BY SVC_PRIORITY ASC, SVC_WEIGHT ASC, SVR_TTL DESC
+
+	
+	</select>
+	
+
+</mapper>
