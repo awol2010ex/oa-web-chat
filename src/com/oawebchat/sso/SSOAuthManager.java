@@ -13,12 +13,8 @@ import javax.naming.ldap.InitialLdapContext;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 //SSO验证类
-@Service
 public class SSOAuthManager {
 	private final static Logger logger = LoggerFactory
 			.getLogger(SSOMD5Helper.class);
@@ -27,9 +23,7 @@ public class SSOAuthManager {
 
 	private static String ATTRIBUTE_USER_ACCOUNT = "SAMAccountName";// AD域用户属性
 
-	@Autowired
-	@Qualifier("ssoSqlSession")
-	private SqlSession ssoSqlSession;
+	private SqlSession ssoSqlSession;//SSO数据库ibatis
 
 	// 密码验证
 	public boolean authDB(String username, String password) {
@@ -168,5 +162,13 @@ public class SSOAuthManager {
 			return false;
 		}
 
+	}
+
+	public SqlSession getSsoSqlSession() {
+		return ssoSqlSession;
+	}
+
+	public void setSsoSqlSession(SqlSession ssoSqlSession) {
+		this.ssoSqlSession = ssoSqlSession;
 	}
 }

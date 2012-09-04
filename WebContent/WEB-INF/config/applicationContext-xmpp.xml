@@ -21,17 +21,25 @@
 
 <beans>
 
-    <bean id="inmemoryStorageRegistry" class="org.apache.vysper.storage.inmemory.MemoryStorageProviderRegistry" />
-
-    <bean id="jcrStorageRegistry" class="org.apache.vysper.storage.jcr.JcrStorageProviderRegistry" />
+    <!-- sso 验证类 -->
+    <bean id="ssoUserAuthentication" class="com.oawebchat.sso.SSOUserAuthentication" />
+     
+    
+    <!-- SSO用户验证模块登记 -->
+    <bean id="ssoStorageRegistry" class="com.oawebchat.sso.SSOStorageProviderRegistry" >
+          <property name="ssoUserAuthentication" ref="ssoUserAuthentication" />
+    </bean>
 
     <!-- choose one of the storage registries -->
-    <alias name="inmemoryStorageRegistry" alias="storageRegistry" />
+    <!-- 登记模块别名 -->
+    <alias name="ssoStorageRegistry" alias="storageRegistry" />
 
     <!-- default users; remove if you have persistently stored users
          NOTE: if passwords are empty, random passwords are generated and printed on the console
                So, your default install of Vysper is secure from the very beginning
     -->
+    
+    <!-- 增加额外用户 -->
     <bean id="addUsers" class="org.apache.vysper.spring.AddUserHelper">
         <constructor-arg index="0">
             <map>

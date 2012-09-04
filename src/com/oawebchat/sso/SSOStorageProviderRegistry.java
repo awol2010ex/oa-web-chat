@@ -1,0 +1,31 @@
+package com.oawebchat.sso;
+
+import org.apache.vysper.storage.OpenStorageProviderRegistry;
+import org.apache.vysper.xmpp.modules.roster.persistence.MemoryRosterManager;
+//SSO用户验证 ，用户管理登记处理器
+public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
+
+	
+	private SSOUserAuthentication ssoUserAuthentication ;//登陆验证方法
+	
+    public SSOStorageProviderRegistry() {
+        
+        add(new MemoryRosterManager());
+
+        //其他模块
+        // provider from external modules, low coupling, fail when modules are not present
+        add("org.apache.vysper.xmpp.modules.extension.xep0060_pubsub.storageprovider.LeafNodeInMemoryStorageProvider");
+        add("org.apache.vysper.xmpp.modules.extension.xep0060_pubsub.storageprovider.CollectionNodeInMemoryStorageProvider");
+        add("org.apache.vysper.xmpp.modules.extension.xep0160_offline_storage.MemoryOfflineStorageProvider");
+    }
+
+	public SSOUserAuthentication getSsoUserAuthentication() {
+		return ssoUserAuthentication;
+	}
+
+	public void setSsoUserAuthentication(SSOUserAuthentication ssoUserAuthentication) {
+		this.ssoUserAuthentication = ssoUserAuthentication;
+		add(ssoUserAuthentication);//改成SSO登陆验证方法
+	}
+
+}
