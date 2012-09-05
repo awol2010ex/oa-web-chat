@@ -40,5 +40,12 @@
 	
 	</select>
 	
+	<!-- 取得账户信息 -->
+	<select id="getStaffList" parameterType="map" resultType="map">
+		
+	 SELECT  *  from VW_CAS_USERS_DB_NOW  where login_id=#{login_id} 
+	
+	</select>
+	
 
 </mapper>

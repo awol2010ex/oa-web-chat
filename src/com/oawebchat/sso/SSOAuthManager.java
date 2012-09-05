@@ -173,4 +173,10 @@ public class SSOAuthManager {
 	public void setSsoSqlSession(SqlSession ssoSqlSession) {
 		this.ssoSqlSession = ssoSqlSession;
 	}
-}
+	
+	//取得账户信息
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>>  getStaffList(Map<String,Object> map) throws Exception{
+		return ssoSqlSession.selectList("com.oawebchat.sso.getStaffList", map);
+	}
+ }
