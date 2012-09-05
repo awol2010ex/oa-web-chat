@@ -20,6 +20,13 @@
 
       <constructor-arg index="0" ref="oaSqlSessionFactory" /> 
 
-  </bean> 
+   </bean> 
+   
+   <!-- OA人员信息操作 -->
+   <bean id="staffService" class="com.oawebchat.oa.service.impl.StaffServiceImpl"> 
+        <property name="oaSqlSession" ref="oaSqlSession" />
+   </bean> 
+   
+   
 </beans>
 

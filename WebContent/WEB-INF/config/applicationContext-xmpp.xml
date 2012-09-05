@@ -20,6 +20,10 @@
 
 
 <beans>
+    <!-- vcard来源 -->
+    <bean id="oaVcardTempPersistenceManager" class="com.oawebchat.oa.vcard.OAVcardTempPersistenceManager" >
+          <property name="staffService" ref="staffService" />
+    </bean>
 
     <!-- sso 验证类 -->
     <bean id="ssoUserAuthentication" class="com.oawebchat.sso.SSOUserAuthentication" >
@@ -30,6 +34,7 @@
     <!-- SSO用户验证模块登记 -->
     <bean id="ssoStorageRegistry" class="com.oawebchat.sso.SSOStorageProviderRegistry" >
           <property name="ssoUserAuthentication" ref="ssoUserAuthentication" />
+          <property name="oaVcardTempPersistenceManager" ref="oaVcardTempPersistenceManager" />
     </bean>
 
     <!-- choose one of the storage registries -->

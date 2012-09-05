@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oawebchat.oa">
+<!--  取得人员明细 -->
+	<select id="getStaffList" parameterType="map" resultType="map">
+	  select s.staffname as name, s.email from wf_staff s,ip_arc_user_auth u  where s.staffid=u.staff_id  and u.login_id= #{login_id}
+	</select>
+</mapper>

@@ -2,11 +2,15 @@ package com.oawebchat.sso;
 
 import org.apache.vysper.storage.OpenStorageProviderRegistry;
 import org.apache.vysper.xmpp.modules.roster.persistence.MemoryRosterManager;
+
+import com.oawebchat.oa.vcard.OAVcardTempPersistenceManager;
 //SSO用户验证 ，用户管理登记处理器
 public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 
 	
 	private SSOUserAuthentication ssoUserAuthentication ;//登陆验证方法
+	
+	private OAVcardTempPersistenceManager  oaVcardTempPersistenceManager ;//vard 来源
 	
     public SSOStorageProviderRegistry() {
         
@@ -26,6 +30,16 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 	public void setSsoUserAuthentication(SSOUserAuthentication ssoUserAuthentication) {
 		this.ssoUserAuthentication = ssoUserAuthentication;
 		add(ssoUserAuthentication);//改成SSO登陆验证方法
+	}
+
+	public OAVcardTempPersistenceManager getOaVcardTempPersistenceManager() {
+		return oaVcardTempPersistenceManager;
+	}
+
+	public void setOaVcardTempPersistenceManager(
+			OAVcardTempPersistenceManager oaVcardTempPersistenceManager) {
+		this.oaVcardTempPersistenceManager = oaVcardTempPersistenceManager;
+		add(oaVcardTempPersistenceManager);//改成从OA信息取得VCARD
 	}
 
 }
