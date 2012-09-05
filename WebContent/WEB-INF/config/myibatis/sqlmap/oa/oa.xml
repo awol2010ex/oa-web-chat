@@ -5,6 +5,20 @@
 <mapper namespace="com.oawebchat.oa">
 <!--  取得人员明细 -->
 	<select id="getStaffList" parameterType="map" resultType="map">
-	  select s.staffname as name, s.email from wf_staff s,ip_arc_user_auth u  where s.staffid=u.staff_id  and u.login_id= #{login_id}
-	</select>
+	    SELECT
+    s.staffname AS name,
+    s.email,
+    s.tel ,
+    ui.area ,
+    ui.PROVINCE,
+    ui.CITY,
+    ui.SIMPLE_NAME ORG_NAME 
+FROM
+    wf_staff s,
+    ip_arc_user_auth u ,
+    t_biz_unitinfo ui
+WHERE
+    s.staffid=u.staff_id
+AND s.ownerunitid =ui.id
+	    and u.login_id= #{login_id}</select>
 </mapper>

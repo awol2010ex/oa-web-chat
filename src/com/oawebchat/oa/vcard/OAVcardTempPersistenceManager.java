@@ -54,13 +54,13 @@ public class OAVcardTempPersistenceManager implements
 					+ "</GIVEN>                                          ");
 			xml.append("<MIDDLE></MIDDLE>                                      ");
 			xml.append("</N>                                                         ");
-			xml.append("<ORG><ORGNAME></ORGNAME>                                 ");
+			xml.append("<ORG><ORGNAME>"+(String)staff.get("ORG_NAME")+"</ORGNAME>                                 ");
 			xml.append("<ORGUNIT></ORGUNIT>                                      ");
 			xml.append("</ORG>                                                       ");
 			xml.append("<FN>" + name
 					+ "</FN>                                      ");
 			xml.append("<URL/>                                                       ");
-			xml.append("<TITLE></TITLE>                                          ");
+			xml.append("<TITLE>"+name+"</TITLE>                                          ");
 			xml.append("<NICKNAME>" + name
 					+ "</NICKNAME>                                    ");
 			xml.append("<EMAIL><HOME/><INTERNET/><PREF/><USERID>"
@@ -68,7 +68,7 @@ public class OAVcardTempPersistenceManager implements
 			xml.append("</EMAIL>                                                     ");
 			xml.append("<TEL><PAGER/><WORK/><NUMBER></NUMBER>                    ");
 			xml.append("</TEL>                                                       ");
-			xml.append("<TEL><CELL/><WORK/><NUMBER></NUMBER>                 ");
+			xml.append("<TEL><CELL/><WORK/><NUMBER>"+(String)staff.get("TEL")+"</NUMBER>                 ");
 			xml.append("</TEL>                                                       ");
 			xml.append("<TEL><VOICE/><WORK/><NUMBER></NUMBER>                    ");
 			xml.append("</TEL>                                                       ");
@@ -85,13 +85,13 @@ public class OAVcardTempPersistenceManager implements
 			xml.append("<ADR><WORK/><PCODE></PCODE>                              ");
 			xml.append("<REGION></REGION>                                          ");
 			xml.append("<STREET></STREET>                                        ");
-			xml.append("<CTRY></CTRY>                                            ");
+			xml.append("<CTRY>"+(String)staff.get("CITY")+"</CTRY>                                            ");
 			xml.append("<LOCALITY></LOCALITY>                                    ");
 			xml.append("</ADR>                                                       ");
 			xml.append("<ADR><HOME/><PCODE></PCODE>                              ");
 			xml.append("<REGION></REGION>                                          ");
 			xml.append("<STREET></STREET>                                        ");
-			xml.append("<CTRY></CTRY>                                            ");
+			xml.append("<CTRY>"+(String)staff.get("CITY")+"</CTRY>                                            ");
 			xml.append("<LOCALITY></LOCALITY>                                    ");
 			xml.append("</ADR>                                                       ");
 
