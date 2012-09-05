@@ -22,7 +22,9 @@
 <beans>
 
     <!-- sso 验证类 -->
-    <bean id="ssoUserAuthentication" class="com.oawebchat.sso.SSOUserAuthentication" />
+    <bean id="ssoUserAuthentication" class="com.oawebchat.sso.SSOUserAuthentication" >
+          <property name="ssoAuthManager" ref="ssoAuthManager" />
+    </bean>
      
     
     <!-- SSO用户验证模块登记 -->
@@ -58,15 +60,14 @@
     <!-- for making the server available over HTTP transport, configure the BOSH endpoint
          BOSH requires extension xep0124-xep0206-bosh to be on the classpath.
     -->
-    <!--
+    
     <bean id="boshEndpoint" class="org.apache.vysper.xmpp.extension.xep0124.BoshEndpoint">
         <property name="accessControlAllowOrigin">
             <list><value>*</value></list>
         </property>
-        <property name="port" value="8080" />
+        <property name="port" value="7070" />
         <property name="contextPath" value="/bosh" />
     </bean>
-    -->
     
     <bean id="server" class="org.apache.vysper.spring.SpringCompatibleXMPPServer"
           init-method="init" destroy-method="destroy">
@@ -75,7 +76,7 @@
         <property name="endpoints">
             <list>
                 <ref bean="tcpEndpoint"/>
-                <!--<ref bean="boshEndpoint"/>-->
+                <ref bean="boshEndpoint"/>
             </list>
         </property>
         <property name="storageProviderRegistry" ref="storageRegistry" />
@@ -97,7 +98,7 @@
                 <!-- below some more modules which are available as separately-built jars. 
                      make sure they are on the classpath when enabling them or remove the beans below, 
                      depending on the features your server should expose -->
-                <!--<bean class="org.apache.vysper.xmpp.modules.extension.xep0060_pubsub.PublishSubscribeModule" />-->
+                <bean class="org.apache.vysper.xmpp.modules.extension.xep0060_pubsub.PublishSubscribeModule" />
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0045_muc.MUCModule" />
             </list>
         </property>

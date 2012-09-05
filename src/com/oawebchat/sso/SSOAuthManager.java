@@ -139,7 +139,6 @@ public class SSOAuthManager {
 				+ "@" + DOMAIN_NAME);
 		localHashtable.put("java.naming.security.credentials", p_CAS_User_Pswd);
 
-		String str3 = null;
 		Object localObject = null;
 		InitialLdapContext localInitialLdapContext = null;
 		try {
@@ -154,6 +153,9 @@ public class SSOAuthManager {
 				if (localSearchResult != null)
 					localObject = localSearchResult.getAttributes();
 
+				if(localObject!=null){
+					logger.info("", localObject);
+				}
 			}
 
 			return true;

@@ -10,6 +10,10 @@ import org.apache.vysper.xmpp.authentication.UserAuthentication;
 //SSO用户验证类
 public class SSOUserAuthentication  implements UserAuthentication, AccountManagement {
 
+	//SSO验证相关操作
+	private SSOAuthManager ssoAuthManager;
+	
+	
     private final Map<Entity, String> userPasswordMap = new HashMap<Entity, String>();
 
     public SSOUserAuthentication() {
@@ -43,4 +47,16 @@ public class SSOUserAuthentication  implements UserAuthentication, AccountManage
     private boolean verify(Entity username, String passwordCleartext) {
         return passwordCleartext.equals(userPasswordMap.get(username));
     }
+
+	public SSOAuthManager getSsoAuthManager() {
+		return ssoAuthManager;
+	}
+
+	public void setSsoAuthManager(SSOAuthManager ssoAuthManager) {
+		this.ssoAuthManager = ssoAuthManager;
+	}
+
+	public Map<Entity, String> getUserPasswordMap() {
+		return userPasswordMap;
+	}
 }
