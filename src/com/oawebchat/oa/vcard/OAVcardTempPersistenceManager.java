@@ -83,15 +83,15 @@ public class OAVcardTempPersistenceManager implements
 			xml.append("<TEL><FAX/><HOME/><NUMBER></NUMBER>                      ");
 			xml.append("</TEL>                                                       ");
 			xml.append("<ADR><WORK/><PCODE></PCODE>                              ");
-			xml.append("<REGION></REGION>                                          ");
+			xml.append("<REGION>"+(String)staff.get("CITY")+"</REGION>                                          ");
 			xml.append("<STREET></STREET>                                        ");
-			xml.append("<CTRY>"+(String)staff.get("CITY")+"</CTRY>                                            ");
+			xml.append("<CTRY></CTRY>                                            ");
 			xml.append("<LOCALITY></LOCALITY>                                    ");
 			xml.append("</ADR>                                                       ");
 			xml.append("<ADR><HOME/><PCODE></PCODE>                              ");
-			xml.append("<REGION></REGION>                                          ");
+			xml.append("<REGION>"+(String)staff.get("CITY")+"</REGION>                                          ");
 			xml.append("<STREET></STREET>                                        ");
-			xml.append("<CTRY>"+(String)staff.get("CITY")+"</CTRY>                                            ");
+			xml.append("<CTRY></CTRY>                                            ");
 			xml.append("<LOCALITY></LOCALITY>                                    ");
 			xml.append("</ADR>                                                       ");
 
