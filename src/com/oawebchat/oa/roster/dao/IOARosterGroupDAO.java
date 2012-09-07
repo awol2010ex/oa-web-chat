@@ -11,4 +11,7 @@ public interface IOARosterGroupDAO {
 	
 	//添加联系人分组
 	public void saveRosterGroupList(List<OARosterGroup> groupList ) throws Exception;
+	
+	//删除联系人分组信息
+	public void deleteRosterGroup(String rosterid) throws Exception;
 }
