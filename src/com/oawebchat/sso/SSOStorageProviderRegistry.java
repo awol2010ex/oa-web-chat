@@ -3,6 +3,7 @@ package com.oawebchat.sso;
 import org.apache.vysper.storage.OpenStorageProviderRegistry;
 import org.apache.vysper.xmpp.modules.roster.persistence.MemoryRosterManager;
 
+import com.oawebchat.oa.roster.OARosterManager;
 import com.oawebchat.oa.vcard.OAVcardTempPersistenceManager;
 //SSO用户验证 ，用户管理登记处理器
 public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
@@ -12,9 +13,11 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 	
 	private OAVcardTempPersistenceManager  oaVcardTempPersistenceManager ;//vard 来源
 	
+	private  OARosterManager oaRosterManager;//OA联系人
+	
     public SSOStorageProviderRegistry() {
         
-        add(new MemoryRosterManager());
+        //add(new MemoryRosterManager());
 
         //其他模块
         // provider from external modules, low coupling, fail when modules are not present
@@ -40,6 +43,15 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 			OAVcardTempPersistenceManager oaVcardTempPersistenceManager) {
 		this.oaVcardTempPersistenceManager = oaVcardTempPersistenceManager;
 		add(oaVcardTempPersistenceManager);//改成从OA信息取得VCARD
+	}
+
+	public OARosterManager getOaRosterManager() {
+		return oaRosterManager;
+	}
+
+	public void setOaRosterManager(OARosterManager oaRosterManager) {
+		this.oaRosterManager = oaRosterManager;
+		this.add(oaRosterManager);//注入联系人操作类
 	}
 
 }

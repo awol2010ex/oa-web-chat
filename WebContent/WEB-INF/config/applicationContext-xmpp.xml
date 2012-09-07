@@ -29,12 +29,18 @@
     <bean id="ssoUserAuthentication" class="com.oawebchat.sso.SSOUserAuthentication" >
           <property name="ssoAuthManager" ref="ssoAuthManager" />
     </bean>
+    
+    
+     <!-- oa 联系人操作 -->
+    <bean id="oaRosterManager" class="com.oawebchat.oa.roster.OARosterManager" >
+    </bean>
      
     
     <!-- SSO用户验证模块登记 -->
     <bean id="ssoStorageRegistry" class="com.oawebchat.sso.SSOStorageProviderRegistry" >
           <property name="ssoUserAuthentication" ref="ssoUserAuthentication" />
           <property name="oaVcardTempPersistenceManager" ref="oaVcardTempPersistenceManager" />
+          <property name="oaRosterManager" ref="oaRosterManager" />
     </bean>
 
     <!-- choose one of the storage registries -->
