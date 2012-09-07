@@ -9,4 +9,7 @@ public interface IOARosterDAO {
 
 	//联系人列表
 	public List<OARoster>  getRosterList(String jid) throws Exception;
+	
+	//联系人列表
+	public List<OARoster>  getRosterList(String jid, String contact) throws Exception;
 }
