@@ -110,11 +110,33 @@ public class OARosterManager implements RosterManager,
 		}
 	}
 
+	//删除联系人
 	@Override
 	public void removeContact(Entity jidUser, Entity jidContact)
 			throws RosterException {
 		// TODO Auto-generated method stub
 
+		List<OARoster> rosterList = null;
+		try {// 已保存的联系人
+			rosterList = oaRosterDAO.getRosterList(jidUser.getBareJID()
+					.toString(), jidContact.getBareJID().toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("", e);
+		}
+
+		if (rosterList != null && rosterList.size() > 0) {
+			OARoster roster = rosterList.get(0);
+			
+			try {
+				oaRosterGroupDAO.deleteRosterGroup(roster.getId());// 删除联系人分组
+				
+				oaRosterDAO.deleteRoster(roster);//删除联系人
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				logger.error("",e);
+			}
+		}
 	}
 
 	@Override

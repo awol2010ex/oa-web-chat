@@ -33,4 +33,9 @@ public class OARosterDAOImpl extends HibernateDao<OARoster,String> implements IO
 		this.save(roster);
 	}
 
+	//删除联系人
+	@Transactional
+	public void deleteRoster(OARoster roster) throws Exception{
+		this.delete(roster);
+	}
 }

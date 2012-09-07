@@ -15,4 +15,8 @@ public interface IOARosterDAO {
 	
 	//保存联系人
 	public void saveRoster(OARoster roster) throws Exception;
+	
+	
+	//删除联系人
+	public void deleteRoster(OARoster roster) throws Exception;
 }
