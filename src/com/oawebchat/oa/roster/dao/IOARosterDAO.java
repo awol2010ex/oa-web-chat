@@ -12,4 +12,7 @@ public interface IOARosterDAO {
 	
 	//联系人列表
 	public List<OARoster>  getRosterList(String jid, String contact) throws Exception;
+	
+	//保存联系人
+	public void saveRoster(OARoster roster) throws Exception;
 }

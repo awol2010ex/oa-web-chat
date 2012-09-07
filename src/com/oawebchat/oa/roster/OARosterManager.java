@@ -1,5 +1,8 @@
 package com.oawebchat.oa.roster;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.vysper.xmpp.addressing.Entity;
@@ -9,6 +12,7 @@ import org.apache.vysper.xmpp.modules.ServerRuntimeContextService;
 import org.apache.vysper.xmpp.modules.roster.MutableRoster;
 import org.apache.vysper.xmpp.modules.roster.Roster;
 import org.apache.vysper.xmpp.modules.roster.RosterException;
+import org.apache.vysper.xmpp.modules.roster.RosterGroup;
 import org.apache.vysper.xmpp.modules.roster.RosterItem;
 import org.apache.vysper.xmpp.modules.roster.SubscriptionType;
 import org.apache.vysper.xmpp.modules.roster.persistence.RosterManager;
@@ -19,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.oawebchat.oa.roster.dao.IOARosterDAO;
 import com.oawebchat.oa.roster.dao.IOARosterGroupDAO;
 import com.oawebchat.oa.roster.vo.OARoster;
+import com.oawebchat.oa.roster.vo.OARosterGroup;
+import com.oawebchat.utils.UUIDGenerator;
 //OA联系人接口
 public class OARosterManager implements RosterManager, ServerRuntimeContextService  {
 	
@@ -40,6 +46,39 @@ public class OARosterManager implements RosterManager, ServerRuntimeContextServi
 	@Override
 	public void addContact(Entity entity, RosterItem rosterItem) throws RosterException {
 		// TODO Auto-generated method stub
+		OARoster roster= new OARoster();
+		roster.setId(UUIDGenerator.generate());//uuid
+		roster.setCreateddatetime(new Timestamp(new Date().getTime()));//创建时间
+		roster.setJid(entity.getBareJID().toString());//本用户JID
+		roster.setContact(rosterItem.getJid().toString());//联系人JID
+		
+		List<RosterGroup> groupList =rosterItem.getGroups();//分组
+		
+		
+		List<OARosterGroup> oaGroupList =new ArrayList<OARosterGroup>();//数据库存储分组
+		if(groupList !=null && groupList.size()>0){
+			for(RosterGroup group:groupList){
+				OARosterGroup oag =new OARosterGroup();
+				oag.setId(UUIDGenerator.generate());
+				oag.setRosterid(roster.getId());//联系人数据库ID
+				oag.setGroupname(group.getName());//分组名称
+				
+				oaGroupList.add(oag);
+			}
+		}
+		
+		try {//保存联系人
+			oaRosterDAO.saveRoster(roster);
+			
+			oaRosterGroupDAO.saveRosterGroupList(oaGroupList);//保存联系人分组
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("",e);
+		}
+		
+		
+		
+		
 		
 	}
 

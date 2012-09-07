@@ -22,8 +22,15 @@ public class OARosterDAOImpl extends HibernateDao<OARoster,String> implements IO
 	}
 	
 	//联系人列表
+	@Transactional
 	public List<OARoster>  getRosterList(String jid, String contact) throws Exception{
 		return this.find("from OARoster where jid=?  and  contact=?", jid,contact );
+	}
+	
+	//保存联系人
+	@Transactional
+	public void saveRoster(OARoster roster) throws Exception{
+		this.save(roster);
 	}
 
 }

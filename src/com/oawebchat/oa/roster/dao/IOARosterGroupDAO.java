@@ -8,4 +8,7 @@ import com.oawebchat.oa.roster.vo.OARosterGroup;
 public interface IOARosterGroupDAO {
 	//联系人分组列表
 	public List<OARosterGroup>  getRosterGroupList(String rosterid) throws Exception;
+	
+	//添加联系人分组
+	public void saveRosterGroupList(List<OARosterGroup> groupList ) throws Exception;
 }
