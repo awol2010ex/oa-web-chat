@@ -95,9 +95,9 @@
         <property name="certificatePassword" value="boguspw" />
         <property name="modules" >
             <list>
-                <bean class="org.apache.vysper.xmpp.modules.extension.xep0092_software_version.SoftwareVersionModule"/>
+                <bean class="org.apache.vysper.xmpp.modules.extension.xep0092_software_version.SoftwareVersionModule"/> <!-- 服务器版本显示 -->
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0202_entity_time.EntityTimeModule" />
-                <bean class="org.apache.vysper.xmpp.modules.extension.xep0054_vcardtemp.VcardTempModule" />
+                <bean class="org.apache.vysper.xmpp.modules.extension.xep0054_vcardtemp.VcardTempModule" /><!-- VCARD 显示 -->
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0199_xmppping.XmppPingModule" />
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0049_privatedata.PrivateDataModule" />
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0050_adhoc_commands.AdhocCommandsModule" />
@@ -111,6 +111,10 @@
                      depending on the features your server should expose -->
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0060_pubsub.PublishSubscribeModule" />
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0045_muc.MUCModule" />
+                
+                
+                
+                <bean class="com.oawebchat.sso.usersearch.xep0055.JabberSearchModule" /><!-- Jabber search 模块 -->
             </list>
         </property>
     </bean>

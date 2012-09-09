@@ -1,7 +1,6 @@
 package com.oawebchat.sso;
 
 import org.apache.vysper.storage.OpenStorageProviderRegistry;
-import org.apache.vysper.xmpp.modules.roster.persistence.MemoryRosterManager;
 
 import com.oawebchat.oa.roster.OARosterManager;
 import com.oawebchat.oa.vcard.OAVcardTempPersistenceManager;
