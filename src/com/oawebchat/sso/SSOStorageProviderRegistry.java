@@ -4,6 +4,7 @@ import org.apache.vysper.storage.OpenStorageProviderRegistry;
 
 import com.oawebchat.oa.roster.OARosterManager;
 import com.oawebchat.oa.vcard.OAVcardTempPersistenceManager;
+import com.oawebchat.sso.usersearch.xep0055.SSOJabberSearchManager;
 //SSO用户验证 ，用户管理登记处理器
 public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 
@@ -13,6 +14,8 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 	private OAVcardTempPersistenceManager  oaVcardTempPersistenceManager ;//vard 来源
 	
 	private  OARosterManager oaRosterManager;//OA联系人
+	
+	private SSOJabberSearchManager  ssoJabberSearchManager;//Jabber Search 模块
 	
     public SSOStorageProviderRegistry() {
         
@@ -51,6 +54,16 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 	public void setOaRosterManager(OARosterManager oaRosterManager) {
 		this.oaRosterManager = oaRosterManager;
 		this.add(oaRosterManager);//注入联系人操作类
+	}
+
+	public SSOJabberSearchManager getSsoJabberSearchManager() {
+		return ssoJabberSearchManager;
+	}
+
+	public void setSsoJabberSearchManager(
+			SSOJabberSearchManager ssoJabberSearchManager) {
+		this.ssoJabberSearchManager = ssoJabberSearchManager;
+		this.add(ssoJabberSearchManager);//注入Jabber Search 模块
 	}
 
 }

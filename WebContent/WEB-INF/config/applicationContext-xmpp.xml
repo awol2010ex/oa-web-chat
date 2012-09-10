@@ -34,6 +34,13 @@
      <!-- oa 联系人操作 -->
     <bean id="oaRosterManager" class="com.oawebchat.oa.roster.OARosterManager" >
     </bean>
+    
+    
+    
+     <!-- SSO 用户搜索模块 -->
+    <bean id="ssoJabberSearchManager" class="com.oawebchat.sso.usersearch.xep0055.SSOJabberSearchManager" >
+    </bean>
+    
      
     
     <!-- SSO用户验证模块登记 -->
@@ -41,7 +48,11 @@
           <property name="ssoUserAuthentication" ref="ssoUserAuthentication" />
           <property name="oaVcardTempPersistenceManager" ref="oaVcardTempPersistenceManager" />
           <property name="oaRosterManager" ref="oaRosterManager" />
+          <property name="ssoJabberSearchManager" ref="ssoJabberSearchManager" />
+          
     </bean>
+
+
 
     <!-- choose one of the storage registries -->
     <!-- 登记模块别名 -->
