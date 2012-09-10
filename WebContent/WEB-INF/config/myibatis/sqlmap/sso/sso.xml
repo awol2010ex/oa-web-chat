@@ -47,5 +47,26 @@
 	
 	</select>
 	
+	
+	<!-- 用户搜索 -->
+    <select id="searchUser" parameterType="map" resultType="map">
+		
+	 SELECT  USER_NAME FIRST_NAME ,USER_NAME LAST_NAME ,USER_NAME  NICK_NAME ,OFFICE_EMAIL EMAIL ,LOGIN_ID||'@ghac.cn' JID  from VW_CAS_USERS_BASE_T  where 1=1 
+	 
+	 <if test="FIRST_NAME!=null and FIRST_NAME!=''">    
+         AND USER_NAME  like   '%${FIRST_NAME}%'
+     </if>
+	 <if test="LAST_NAME!=null and LAST_NAME!=''">    
+         AND USER_NAME  like   '%${LAST_NAME}%'
+     </if> 
+	 <if test="NICK_NAME!=null and NICK_NAME!=''">    
+         AND USER_NAME  like   '%${NICK_NAME}%'
+     </if> 
+     <if test="EMAIL!=null and EMAIL=''">    
+         AND OFFICE_EMAIL  like   '%${EMAIL}%'
+     </if> 
+     
+	</select>
+	
 
 </mapper>

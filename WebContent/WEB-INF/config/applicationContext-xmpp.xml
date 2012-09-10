@@ -39,6 +39,7 @@
     
      <!-- SSO 用户搜索模块 -->
     <bean id="ssoJabberSearchManager" class="com.oawebchat.sso.usersearch.xep0055.SSOJabberSearchManager" >
+          <property name="ssoAuthManager" ref="ssoAuthManager" />
     </bean>
     
      

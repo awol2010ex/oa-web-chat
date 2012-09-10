@@ -1,5 +1,8 @@
 package com.oawebchat.sso.usersearch.xep0055;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.vysper.compliance.SpecCompliant;
 import org.apache.vysper.xml.fragment.XMLElement;
 import org.apache.vysper.xmpp.modules.core.base.handler.DefaultIQHandler;
@@ -35,7 +38,7 @@ public class JabberSearchIQHandler extends DefaultIQHandler {
     //GET 操作,具体看协议 输出查询表单
     @Override
     protected Stanza handleGet(IQStanza stanza, ServerRuntimeContext serverRuntimeContext, SessionContext sessionContext) {
-
+    	
 
         if (persistenceManager == null) {
             return buildInteralStorageError(stanza);
@@ -64,18 +67,8 @@ public class JabberSearchIQHandler extends DefaultIQHandler {
 
 
 
-    //RESULT:取得查询结果
-	@Override
-	protected Stanza handleResult(IQStanza stanza,
-			ServerRuntimeContext serverRuntimeContext,
-			SessionContext sessionContext) {
-		// TODO Auto-generated method stub
-		return super.handleResult(stanza, serverRuntimeContext, sessionContext);
-	}
 
-
-
-	//SET 操作 设置默认查询条件
+	//SET 操作 返回查询结果
 	@Override
 	protected Stanza handleSet(IQStanza stanza,
 			ServerRuntimeContext serverRuntimeContext,
@@ -85,8 +78,15 @@ public class JabberSearchIQHandler extends DefaultIQHandler {
             return buildInteralStorageError(stanza);
         }
         
-        //设置默认查询条件
-        String conditionXml = persistenceManager.getSearchDefaultCondition();
+        //设置查询条件
+		Map<String,Object> map =new HashMap<String,Object>();
+		
+		
+		
+		
+		
+		//查询结果
+        String resultXml = persistenceManager.getSearchResult(map);
         
         
         
@@ -94,7 +94,7 @@ public class JabberSearchIQHandler extends DefaultIQHandler {
         StanzaBuilder stanzaBuilder = StanzaBuilder.createIQStanza(stanza.getTo(), stanza.getFrom(),
                 IQStanzaType.RESULT, stanza.getID());
         try {
-            XMLElement elm = XMLParserUtil.parseDocument(conditionXml);
+            XMLElement elm = XMLParserUtil.parseDocument(resultXml);
             stanzaBuilder.addPreparedElement(elm);
         } catch (Exception e) {
             return buildInteralStorageError(stanza);

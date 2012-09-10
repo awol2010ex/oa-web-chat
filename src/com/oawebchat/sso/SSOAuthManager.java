@@ -23,7 +23,7 @@ public class SSOAuthManager {
 
 	private static String ATTRIBUTE_USER_ACCOUNT = "SAMAccountName";// AD域用户属性
 
-	private SqlSession ssoSqlSession;//SSO数据库ibatis
+	private SqlSession ssoSqlSession;// SSO数据库ibatis
 
 	// 密码验证
 	public boolean authDB(String username, String password) {
@@ -66,7 +66,8 @@ public class SSOAuthManager {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("DOMAIN_NAME", DOMAIN_NAME);// 域名
-			return ssoSqlSession.selectList("com.oawebchat.sso.getSvrList",map);
+			return ssoSqlSession
+					.selectList("com.oawebchat.sso.getSvrList", map);
 		} catch (Exception e) {
 			logger.error("", e);
 			return null;
@@ -104,9 +105,9 @@ public class SSOAuthManager {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean authenAD(String DOMAIN_NAME, String SVR_IP,
 			String p_CAS_User_Name, String p_CAS_User_Pswd, String paramString5) {
-		
-		logger.info("验证服务器:"+SVR_IP);
-		
+
+		logger.info("验证服务器:" + SVR_IP);
+
 		String[] arrayOfString = { "cn", "sn", "givenName",
 				"userPrincipalName", "canonicalName", "AdsPath" };
 		String str1 = "(&(objectcategory=Person)(objectclass=user)("
@@ -153,7 +154,7 @@ public class SSOAuthManager {
 				if (localSearchResult != null)
 					localObject = localSearchResult.getAttributes();
 
-				if(localObject!=null){
+				if (localObject != null) {
 					logger.info("", localObject);
 				}
 			}
@@ -173,10 +174,18 @@ public class SSOAuthManager {
 	public void setSsoSqlSession(SqlSession ssoSqlSession) {
 		this.ssoSqlSession = ssoSqlSession;
 	}
-	
-	//取得账户信息
+
+	// 取得账户信息
 	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>>  getStaffList(Map<String,Object> map) throws Exception{
+	public List<Map<String, Object>> getStaffList(Map<String, Object> map)
+			throws Exception {
 		return ssoSqlSession.selectList("com.oawebchat.sso.getStaffList", map);
 	}
- }
+
+	// 用户搜索
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> searchUser(Map<String, Object> map)
+			throws Exception {
+		return ssoSqlSession.selectList("com.oawebchat.sso.searchUser", map);
+	}
+}
