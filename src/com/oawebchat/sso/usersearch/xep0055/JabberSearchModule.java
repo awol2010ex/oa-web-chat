@@ -39,7 +39,10 @@ public class JabberSearchModule extends DefaultDiscoAwareModule implements
             iqHandler.setPersistenceManager(persistenceManager);
         }
     }
-
+	 @Override
+	    protected void addServerInfoRequestListeners(List<ServerInfoRequestListener> serverInfoRequestListeners) {
+	        serverInfoRequestListeners.add(this);
+	    }
 	//取得服务器信息
 	@Override
 	public List<InfoElement> getServerInfosFor(InfoRequest request)
@@ -52,7 +55,7 @@ public class JabberSearchModule extends DefaultDiscoAwareModule implements
         return infoElements;
 	}
 	
-	//添加字段,用于搜索该服务
+	//添加字典,用于搜索该服务
 	@Override
     protected void addHandlerDictionaries(List<HandlerDictionary> dictionary) {
         iqHandler = new JabberSearchIQHandler();
@@ -62,7 +65,7 @@ public class JabberSearchModule extends DefaultDiscoAwareModule implements
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "XEP-0055: Jabber Search";
+		return "XEP-0055 Jabber Search";
 	}
 
 	//取得协议版本
