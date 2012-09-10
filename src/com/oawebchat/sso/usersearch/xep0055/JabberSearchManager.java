@@ -9,9 +9,13 @@ public interface JabberSearchManager extends StorageProvider {
 
 	// 取得查询结果
 	public String getSearchResult(Map<String, Object> map);
+
+	// 取得查询表单
+	public String getSearchForm();
+
 	/**
-     * @return if the persistence manager is ready to operate
-     */
-    boolean isAvailable();
-	
+	 * @return if the persistence manager is ready to operate
+	 */
+	boolean isAvailable();
+
 }
