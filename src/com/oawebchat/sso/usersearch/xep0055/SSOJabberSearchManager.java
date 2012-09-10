@@ -23,12 +23,19 @@ public class SSOJabberSearchManager implements JabberSearchManager {
 	public String getSearchForm() {
 		// TODO Auto-generated method stub
 		return new StringBuffer("<query xmlns='jabber:iq:search'>")
-				.append("<instructions>")
-				.append("Fill in one or more fields to search")
-				.append("for any matching Jabber users.")
+				.append("<instructions>").append("填写查询条件:")
 				.append("</instructions>").append("<first/>").append("<last/>")
 				.append("<nick/>").append("<email/>").append("</query>")
 				.toString();
+	}
+
+	// 取得查询默认条件
+	@Override
+	public String getSearchDefaultCondition() {
+		// TODO Auto-generated method stub
+		return new StringBuffer("<query xmlns='jabber:iq:search'>")
+				.append("<first/>").append("<last/>").append("<nick/>")
+				.append("<email/>").append("</query>").toString();
 	}
 
 }

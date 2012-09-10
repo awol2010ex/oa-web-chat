@@ -64,6 +64,7 @@ public class JabberSearchIQHandler extends DefaultIQHandler {
 
 
 
+    //RESULT:取得查询结果
 	@Override
 	protected Stanza handleResult(IQStanza stanza,
 			ServerRuntimeContext serverRuntimeContext,
@@ -74,20 +75,32 @@ public class JabberSearchIQHandler extends DefaultIQHandler {
 
 
 
-	//SET 操作 更多查询条件
+	//SET 操作 设置默认查询条件
 	@Override
 	protected Stanza handleSet(IQStanza stanza,
 			ServerRuntimeContext serverRuntimeContext,
 			SessionContext sessionContext) {
 		// TODO Auto-generated method stub
-		return super.handleSet(stanza, serverRuntimeContext, sessionContext);
+		if (persistenceManager == null) {
+            return buildInteralStorageError(stanza);
+        }
+        
+        //设置默认查询条件
+        String conditionXml = persistenceManager.getSearchDefaultCondition();
+        
+        
+        
+        //输出表单
+        StanzaBuilder stanzaBuilder = StanzaBuilder.createIQStanza(stanza.getTo(), stanza.getFrom(),
+                IQStanzaType.RESULT, stanza.getID());
+        try {
+            XMLElement elm = XMLParserUtil.parseDocument(conditionXml);
+            stanzaBuilder.addPreparedElement(elm);
+        } catch (Exception e) {
+            return buildInteralStorageError(stanza);
+        }
+        return stanzaBuilder.build();
 	}
 
 
-
-	@Override
-	public boolean verify(Stanza stanza) {
-		// TODO Auto-generated method stub
-		return super.verify(stanza);
-	}
 }
