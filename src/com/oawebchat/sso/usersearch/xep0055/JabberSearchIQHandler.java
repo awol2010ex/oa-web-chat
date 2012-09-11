@@ -1,6 +1,7 @@
 package com.oawebchat.sso.usersearch.xep0055;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.vysper.compliance.SpecCompliant;
@@ -17,90 +18,103 @@ import org.apache.vysper.xmpp.stanza.StanzaBuilder;
 import org.apache.vysper.xmpp.stanza.StanzaErrorCondition;
 import org.apache.vysper.xmpp.stanza.StanzaErrorType;
 import org.apache.vysper.xmpp.stanza.XMPPCoreStanza;
+
 //Jabber Search IQ handler
 @SpecCompliant(spec = "xep-0055", status = SpecCompliant.ComplianceStatus.FINISHED, coverage = SpecCompliant.ComplianceCoverage.COMPLETE)
 public class JabberSearchIQHandler extends DefaultIQHandler {
 	protected JabberSearchManager persistenceManager;
 
-    public void setPersistenceManager(JabberSearchManager persistenceManager) {
-        this.persistenceManager = persistenceManager;
-    }
-    
-    
+	public void setPersistenceManager(JabberSearchManager persistenceManager) {
+		this.persistenceManager = persistenceManager;
+	}
 
-    //内部标签验证
-    @Override
-    protected boolean verifyInnerElement(Stanza stanza) {
-        return  verifyInnerNamespace(stanza, JabberSearchModule.JABBER_SEARCH);
-    }
-    
-    
-    //GET 操作,具体看协议 输出查询表单
-    @Override
-    protected Stanza handleGet(IQStanza stanza, ServerRuntimeContext serverRuntimeContext, SessionContext sessionContext) {
-    	
+	// 内部标签验证
+	@Override
+	protected boolean verifyInnerElement(Stanza stanza) {
+		return verifyInnerNamespace(stanza, JabberSearchModule.JABBER_SEARCH);
+	}
 
-        if (persistenceManager == null) {
-            return buildInteralStorageError(stanza);
-        }
-        
-        //表单定义
-        String formXml = persistenceManager.getSearchForm();
-        
-        
-        
-        //输出表单
-        StanzaBuilder stanzaBuilder = StanzaBuilder.createIQStanza(stanza.getTo(), stanza.getFrom(),
-                IQStanzaType.RESULT, stanza.getID());
-        try {
-            XMLElement elm = XMLParserUtil.parseDocument(formXml);
-            stanzaBuilder.addPreparedElement(elm);
-        } catch (Exception e) {
-            return buildInteralStorageError(stanza);
-        }
-        return stanzaBuilder.build();
-    }
-    private Stanza buildInteralStorageError(XMPPCoreStanza stanza) {
-        return ServerErrorResponses.getStanzaError(StanzaErrorCondition.INTERNAL_SERVER_ERROR,
-                stanza, StanzaErrorType.WAIT, "internal storage inaccessible", null, null);
-    }
+	// GET 操作,具体看协议 输出查询表单
+	@Override
+	protected Stanza handleGet(IQStanza stanza,
+			ServerRuntimeContext serverRuntimeContext,
+			SessionContext sessionContext) {
 
+		if (persistenceManager == null) {
+			return buildInteralStorageError(stanza);
+		}
 
+		// 表单定义
+		String formXml = persistenceManager.getSearchForm();
 
+		// 输出表单
+		StanzaBuilder stanzaBuilder = StanzaBuilder.createIQStanza(
+				stanza.getTo(), stanza.getFrom(), IQStanzaType.RESULT,
+				stanza.getID());
+		try {
+			XMLElement elm = XMLParserUtil.parseDocument(formXml);
+			stanzaBuilder.addPreparedElement(elm);
+		} catch (Exception e) {
+			return buildInteralStorageError(stanza);
+		}
+		return stanzaBuilder.build();
+	}
 
-	//SET 操作 返回查询结果
+	private Stanza buildInteralStorageError(XMPPCoreStanza stanza) {
+		return ServerErrorResponses.getStanzaError(
+				StanzaErrorCondition.INTERNAL_SERVER_ERROR, stanza,
+				StanzaErrorType.WAIT, "internal storage inaccessible", null,
+				null);
+	}
+
+	// SET 操作 返回查询结果
 	@Override
 	protected Stanza handleSet(IQStanza stanza,
 			ServerRuntimeContext serverRuntimeContext,
 			SessionContext sessionContext) {
 		// TODO Auto-generated method stub
 		if (persistenceManager == null) {
-            return buildInteralStorageError(stanza);
-        }
-        
-        //设置查询条件
-		Map<String,Object> map =new HashMap<String,Object>();
-		
-		
-		
-		
-		
-		//查询结果
-        String resultXml = persistenceManager.getSearchResult(map);
-        
-        
-        
-        //输出表单
-        StanzaBuilder stanzaBuilder = StanzaBuilder.createIQStanza(stanza.getTo(), stanza.getFrom(),
-                IQStanzaType.RESULT, stanza.getID());
-        try {
-            XMLElement elm = XMLParserUtil.parseDocument(resultXml);
-            stanzaBuilder.addPreparedElement(elm);
-        } catch (Exception e) {
-            return buildInteralStorageError(stanza);
-        }
-        return stanzaBuilder.build();
-	}
+			return buildInteralStorageError(stanza);
+		}
 
+		// 设置查询条件
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		XMLElement query = stanza.getFirstInnerElement();// query根节点
+
+		List<XMLElement> innerList = query.getInnerElements();// 内部查询属性
+		if (innerList != null && innerList.size() > 0) {
+			for (XMLElement element : innerList) {
+
+				if (element.getInnerText() != null
+						&& !"".equals(element.getInnerText())) {
+					if ("first".equals(element.getName())) {
+						map.put("FIRST_NAME", element.getInnerText().toString());
+					} else if ("last".equals(element.getName())) {
+						map.put("LAST_NAME", element.getInnerText().toString());
+					} else if ("nick".equals(element.getName())) {
+						map.put("NICK_NAME", element.getInnerText().toString());
+					} else if ("email".equals(element.getName())) {
+						map.put("EMAIL", element.getInnerText().toString());
+					}
+				}
+			}
+		}
+
+		// 查询结果
+		String resultXml = persistenceManager.getSearchResult(map);
+
+		// 输出表单
+		StanzaBuilder stanzaBuilder = StanzaBuilder.createIQStanza(
+				stanza.getTo(), stanza.getFrom(), IQStanzaType.RESULT,
+				stanza.getID());
+		try {
+			XMLElement elm = XMLParserUtil.parseDocument(resultXml);
+			stanzaBuilder.addPreparedElement(elm);
+		} catch (Exception e) {
+			return buildInteralStorageError(stanza);
+		}
+		return stanzaBuilder.build();
+	}
 
 }

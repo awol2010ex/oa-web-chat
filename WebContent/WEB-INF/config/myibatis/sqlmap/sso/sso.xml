@@ -62,7 +62,7 @@
 	 <if test="NICK_NAME!=null and NICK_NAME!=''">    
          AND USER_NAME  like   '%${NICK_NAME}%'
      </if> 
-     <if test="EMAIL!=null and EMAIL=''">    
+     <if test="EMAIL!=null and EMAIL!=''">    
          AND OFFICE_EMAIL  like   '%${EMAIL}%'
      </if> 
      

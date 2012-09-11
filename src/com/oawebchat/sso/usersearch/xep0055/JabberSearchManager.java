@@ -13,9 +13,6 @@ public interface JabberSearchManager extends StorageProvider {
 	// 取得查询表单
 	public String getSearchForm();
 	
-	
-	// 取得查询默认条件
-	public String getSearchDefaultCondition();
 
 	/**
 	 * @return if the persistence manager is ready to operate
