@@ -88,7 +88,7 @@
         <property name="accessControlAllowOrigin">
             <list><value>*</value></list>
         </property>
-        <property name="port" value="7070" />
+        <property name="port" value="${jabber.bosh.port}" />
         <property name="contextPath" value="/bosh" />
     </bean>
     
