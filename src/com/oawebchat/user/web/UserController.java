@@ -12,6 +12,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 	private final static Logger logger = LoggerFactory
 			.getLogger(UserController.class);
+	
+	@Value("#{settings['jabber.domain']}") 
+	private String jabber_domain;//域名
+	
+	@Value("#{settings['jabber.bosh.port']}") 
+	private String jabber_bosh_port;//bosh端口
 	
 	
 	/* 登录 */
@@ -54,6 +61,16 @@ public class UserController {
 			logger.error("", e);
 			return "index";
 		}
-		return "main";
+		return this.main(request, currentUser, j_username ,j_password);//转向主页面
 	}
+	
+	//主页面
+    public String main(HttpServletRequest request,Subject currentUser,String j_username, String j_password){
+    	request.setAttribute("jabber_domain", jabber_domain);//域名
+    	request.setAttribute("jabber_bosh_port", jabber_bosh_port);//bosh端口
+    	request.setAttribute("j_username", j_username);//用户名
+    	request.setAttribute("jid", j_username+"@"+jabber_domain);//用户名
+    	request.setAttribute("j_password", j_password);//密码
+    	return "main";
+    }
 }

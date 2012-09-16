@@ -56,12 +56,16 @@ function initComponent(){
 	});
 
 	$("#connect").click(function() {
-		$("#connect-form").hide();
-		$("#workspace").show();
-		connect();
+		f_connect();
 	});
 }
 
+//连接XMPP
+function f_connect(){
+	$("#connect-form").hide();
+	$("#workspace").show();
+	connect();
+}
 
 function formatTime(val) {
 	return val < 10 ? "0" + val : val;

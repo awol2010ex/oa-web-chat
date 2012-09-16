@@ -29,9 +29,8 @@ $(document).ready(function() {
 	//初始化客户端
 	initComponent();
 	
+	f_connect();//连接
 	
-	
-	$("#server").val("<%=  request.getServerName()%>");//服务器地址
 });
 </script>
 </head>
@@ -41,12 +40,14 @@ $(document).ready(function() {
 		<table>
 			<tr>
 				<td>Server</td>
-				<td><input type="text" id="server" value="vysper.org" />
+				<!-- 服务器IP  -->
+				<td><input type="text" id="server" value="<%=  request.getServerName()%>" />
 				</td>
 			</tr>
 			<tr>
 				<td>Port</td>
-				<td><input type="text" id="port" value="8080" />
+				<!--  bosh 端口 -->
+				<td><input type="text" id="port" value="${requestScope.jabber_bosh_port}" />
 				</td>
 			</tr>
 			<tr>
@@ -56,12 +57,12 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td>JID</td>
-				<td><input type="text" id="jid" value="user1@vysper.org" />
+				<td><input type="text" id="jid" value="${requestScope.jid}" />
 				</td>
 			</tr>
 			<tr>
 				<td style="padding-right: 10px;">Password</td>
-				<td><input type="password" id="password" value="password1" />
+				<td><input type="password" id="password" value="${requestScope.j_password}" />
 				</td>
 			</tr>
 			<tr>
