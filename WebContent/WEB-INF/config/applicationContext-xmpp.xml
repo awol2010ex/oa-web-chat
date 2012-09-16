@@ -68,7 +68,7 @@
     <bean id="addUsers" class="org.apache.vysper.spring.AddUserHelper">
         <constructor-arg index="0">
             <map>
-                <entry key="admin@ghac.cn" value="111111" />
+                <entry key="admin@${jabber.domain}" value="111111" />
                 <!--<entry key="user1@vysper.org" value="CHOOSE A SECURE PASSWORD" />-->
                 <!--<entry key="user2@vysper.org" value="CHOOSE A SECURE PASSWORD" />-->
                 <!--<entry key="user3@vysper.org" value="CHOOSE A SECURE PASSWORD" />-->
@@ -95,7 +95,7 @@
     <bean id="server" class="org.apache.vysper.spring.SpringCompatibleXMPPServer"
           init-method="init" destroy-method="destroy">
         <!-- TODO change domain name to your domain -->
-        <constructor-arg value="ghac.cn"/>
+        <constructor-arg value="${jabber.domain}"/>
         <property name="endpoints">
             <list>
                 <ref bean="tcpEndpoint"/>
@@ -115,7 +115,7 @@
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0050_adhoc_commands.AdhocCommandsModule" />
                 <bean class="org.apache.vysper.xmpp.modules.extension.xep0133_service_administration.ServiceAdministrationModule" >
                     <property name="addAdmins">
-                        <list><value>admin@ghac.cn</value></list>
+                        <list><value>admin@${jabber.domain}</value></list>
                     </property>
                 </bean>
                 <!-- below some more modules which are available as separately-built jars. 

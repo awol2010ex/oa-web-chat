@@ -38,7 +38,11 @@ connectionStatuses[Strophe.Status.ATTACHED] = "ATTACHED";
 
 
 
-$(document).ready(function() {
+
+
+
+//初始化客户端
+function initComponent(){
 	$("#tabs").tabs();
 	$("#roster").dialog({
 		autoOpen: false,
@@ -56,7 +60,8 @@ $(document).ready(function() {
 		$("#workspace").show();
 		connect();
 	});
-});
+}
+
 
 function formatTime(val) {
 	return val < 10 ? "0" + val : val;
