@@ -69,7 +69,7 @@ public class SSOUserAuthentication  implements UserAuthentication, AccountManage
     }
 
     //密码验证
-    private boolean verify(Entity username, String passwordCleartext) {
+    public boolean verify(Entity username, String passwordCleartext) {
         if( passwordCleartext.equals(userPasswordMap.get(username))){ //默认用户
         	
         	return true;
