@@ -22,7 +22,7 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 <script src="<%=contextPath %>/static/resources/strophe/md5.js"></script>
 <script src="<%=contextPath %>/static/resources/strophe/strophe.flxhr.js"></script>
 <script src="<%=contextPath %>/static/client/client.js"></script>
-
+<script src="<%=contextPath %>/static/client/locale_zh.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -76,7 +76,7 @@ $(document).ready(function() {
 
 	<div id="workspace" style="display: none;">
 
-		<div id="roster"></div>
+		
 
 		<div id="tabs" style="width: 50%; height: 400px; display: none;">
 			<ul></ul>
@@ -89,6 +89,9 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-
+	
+	
+	<!-- 联系人窗口 -->
+    <div id="roster"></div>
 </body>
 </html>

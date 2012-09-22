@@ -43,15 +43,19 @@ connectionStatuses[Strophe.Status.ATTACHED] = "ATTACHED";
 
 //初始化客户端
 function initComponent(){
-	$("#tabs").tabs();
+	$("#tabs").tabs();//对话框标签页
+	
+	var buttons ={};//联系人按钮
+	buttons[locale.AddRoster]=addContact;//添加联系人按钮
+	buttons[locale.Disconnect]=disconnect;//断开连接按钮
 	$("#roster").dialog({
 		autoOpen: false,
-		buttons: {"Disconnect": disconnect, "Add contact...": addContact},
+		buttons: buttons,//按钮设置
 		closeOnEscape: false,
 		width: 400,
 		height: 250,
 		position: ["right", "top"],
-		title: "Roster",
+		title: locale.Roster,
 		beforeclose: function() {return isDisconnecting;}
 	});
 
@@ -147,7 +151,7 @@ function rosterReceived(iq) {
 
 function addToRoster(jid) {
 	var id = jid2id(jid);
-	$("#roster").append("<div style='cursor: pointer;' jid='" + id + "'>" + jid + " (offline)</div>");
+	$("#roster").append("<div style='cursor: pointer;' jid='" + id + "'>" + jid + " ("+locale.offline+")</div>");
 	$("#roster > div[jid=" + id + "]").click(function() {
 		chatWith(jid);
 	});
@@ -158,10 +162,14 @@ function addToRoster(jid) {
 	});
 }
 
+
+//去掉域名显示JID
 function jid2id(jid) {
 	return Strophe.getBareJidFromJid(jid).replace("@", "AT").replace(/\./g, "_");
 }
 
+
+//接收并显示信息
 function messageReceived(msg) {
 	log("Received chat message", Strophe.serialize(msg));
 	var jid = $(msg).attr("from");
@@ -187,6 +195,8 @@ function showMessage(tabId, authorJid, text) {
 	$("#chat" + tabId + " > input").focus();
 }
 
+
+//验证对话框
 function verifyChatTab(jid) {
 	var id = jid2id(jid);
 	var bareJid = Strophe.getBareJidFromJid(jid);
@@ -207,6 +217,7 @@ function verifyChatTab(jid) {
 	$("#chat" + id + " > input").focus();
 }
 
+//断开连接
 function disconnect() {
 	isDisconnecting = true;
 	$("#roster").dialog("close");
@@ -219,18 +230,30 @@ function disconnect() {
 	connection.disconnect();
 }
 
+
+//与某人对话
 function chatWith(toJid) {
 	log("Chatting with " + toJid + "...");
 	verifyChatTab(toJid);
 }
 
+
+//发送对话信息
 function sendMessage(toJid, text) {
-	showMessage(jid2id(toJid), jid, text);
+	showMessage(jid2id(toJid), jid, text);//显示对话信息框
     var msg = $msg({to: toJid, "type": "chat"}).c('body').t(text);
+    
+    
+    //日志
     log("Sending message", Strophe.serialize(msg));
+    
+    
+    //发送信息
     connection.send(msg);
 }
 
+
+//接收消息包
 function presenceReceived(presence) {
 	log("Received presence", Strophe.serialize(presence));
 	var fromJid = $(presence).attr('from');
@@ -258,11 +281,11 @@ function presenceReceived(presence) {
 	} else if (bareFromJid !== jid) {
 		var contact = $("#roster > div[jid=" + id + "]");
 		if (contact.length === 1) {
-			var isOnline = contact.text().match(/.+\(online\)/);
+			var isOnline = contact.text().match(/.+\(online\)/);//是否在线显示
 			if (isOnline && type === "unavailable") {
-				contact.text(bareFromJid + " (offline)");
+				contact.text(bareFromJid + " ("+locale.offline+")");
 			} else if (!isOnline && type !== "unavailable") {
-				contact.text(bareFromJid + " (online)");
+				contact.text(bareFromJid + " ("+locale.online+")");
 				log("Sending presence", $pres().toString());
 				connection.send($pres());
 			}
@@ -271,13 +294,15 @@ function presenceReceived(presence) {
 	return true;
 }
 
+
+//添加联系人
 function addContact() {
-	var toJid = prompt("Please type the JID of the contact you want to add");
+	var toJid = prompt("Please type the JID of the contact you want to add");//输入新的联系人
 	var id = jid2id(toJid);
 	if (toJid === null) {
 		return;
 	}
-	if (toJid === jid) {
+	if (toJid === jid) {//不能添加自己
 		alert("You cannot add yourself to the roster!");
 		return;
 	}
@@ -285,7 +310,9 @@ function addContact() {
 		alert("JID already present in the roster!");
 		return;
 	}
-	addToRoster(toJid);
+	addToRoster(toJid);//添加联系人
+	
+	//添加联系人的日志
 	var pres = $pres({to: toJid, type: "subscribe"});
 	log("Requesting subscribe to " + toJid, pres.toString());
 	connection.send(pres);
