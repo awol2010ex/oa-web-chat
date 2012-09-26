@@ -74,7 +74,7 @@ function f_connect(){
 function formatTime(val) {
 	return val < 10 ? "0" + val : val;
 }
-
+//输出日志
 function log(msg, xml) {
 	var now = new Date();
 	var hours = formatTime(now.getHours());
@@ -89,12 +89,12 @@ function log(msg, xml) {
 	$("#logger").append(m);
 	$("#logger").get(0).scrollTop = $("#logger").get(0).scrollHeight;
 }
-
+//输出日志
 Strophe.log = function (level, msg) {
 	if(typeof console != "undefined" && console.log) console.log(msg)
 	
 };
-
+//连接
 function connect() {
 	server = $("#server").val();
 	port = $("#port").val();
@@ -116,7 +116,7 @@ function connect() {
 		}
 	});
 }
-
+//用户连接
 function userConnected() {
 	getRoster();
 	// handle received messages
@@ -127,13 +127,13 @@ function userConnected() {
 	isDisconnecting = false;
 	$("#roster").dialog("open");	
 }
-
+//取得联系人
 function getRoster() {
 	var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
 	log("Requesting roster", iq.toString());
 	connection.sendIQ(iq, rosterReceived);
 }
-
+//获得信息
 function rosterReceived(iq) {
 	log("Received roster", Strophe.serialize(iq));
 	$("#roster").empty();
@@ -148,7 +148,7 @@ function rosterReceived(iq) {
 	log("Sending my presence", $pres().toString());
 	connection.send($pres());
 }
-
+//添加联系人
 function addToRoster(jid) {
 	var id = jid2id(jid);
 	$("#roster").append("<div style='cursor: pointer;' jid='" + id + "'>" + jid + " ("+locale.offline+")</div>");
@@ -182,7 +182,7 @@ function messageReceived(msg) {
 	}
 	return true;
 }
-
+//发送信息
 function showMessage(tabId, authorJid, text) {
 	var bareJid = Strophe.getBareJidFromJid(authorJid);
 	var chat = $("#chat" + tabId + " > div");
