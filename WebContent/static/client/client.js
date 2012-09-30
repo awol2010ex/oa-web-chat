@@ -38,7 +38,7 @@ connectionStatuses[Strophe.Status.ATTACHED] = "ATTACHED";
 
 
 
-
+var logger_win =null ;//日志窗口
 
 
 //初始化客户端
@@ -48,6 +48,8 @@ function initComponent(){
 	var buttons ={};//联系人按钮
 	buttons[locale.AddRoster]=addContact;//添加联系人按钮
 	buttons[locale.Disconnect]=disconnect;//断开连接按钮
+	
+	//联系人窗口
 	$("#roster").dialog({
 		autoOpen: false,
 		buttons: buttons,//按钮设置
@@ -59,8 +61,23 @@ function initComponent(){
 		beforeclose: function() {return isDisconnecting;}
 	});
 
+	//连接按钮
 	$("#connect").click(function() {
 		f_connect();
+	});
+	
+	//日志窗口
+	logger_win =$.ligerDialog.open({ 
+		title:"日志",  
+		target: $("#logger") ,
+		isResize:true ,
+		width:800,
+		height:300,
+		modal:false,
+		showMax: true,
+		showToggle: true, 
+		showMin: true,
+		fixedType:'n'
 	});
 }
 
@@ -107,9 +124,9 @@ function connect() {
 
 	connection.connect(jid, password, function(status) {
 		log("Connection status: " + connectionStatuses[status]);
-		if (status === Strophe.Status.CONNECTED) {
+		if (status === Strophe.Status.CONNECTED) {//已连接
 			userConnected();
-		} else if (status === Strophe.Status.DISCONNECTED) {
+		} else if (status === Strophe.Status.DISCONNECTED) {//连接断开
 			$("#workspace").hide();
 			$("#connect-form").show();
 			$("#logger").empty();
@@ -125,7 +142,7 @@ function userConnected() {
 	// handle presence
 	connection.addHandler(presenceReceived, null, "presence");	
 	isDisconnecting = false;
-	$("#roster").dialog("open");	
+	$("#roster").dialog("open");	//打开联系人窗口
 }
 //取得联系人
 function getRoster() {

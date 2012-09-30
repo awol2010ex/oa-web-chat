@@ -72,38 +72,38 @@ $(document).ready(function() {
 </head>
 <body style="font-family: arial;">
 <!-- 连接窗口 -->
-	<div id="connect-form" style="margin: auto; width: 300px;">
+	<div id="connect-form" style="margin: auto; width: 300px;" >
 		<table>
 			<tr>
-				<td>Server</td>
+				<td style='padding:5px'>Server</td>
 				<!-- 服务器IP  -->
-				<td><input type="text" id="server" value="<%=  request.getServerName()%>" />
+				<td style='padding:5px'><input type="text" id="server" value="<%=  request.getServerName()%>" />
 				</td>
 			</tr>
 			<tr>
-				<td>Port</td>
+				<td style='padding:5px'>Port</td>
 				<!--  bosh 端口 -->
-				<td><input type="text" id="port" value="${requestScope.jabber_bosh_port}" />
+				<td style='padding:5px'><input type="text" id="port" value="${requestScope.jabber_bosh_port}" />
 				</td>
 			</tr>
 			<tr>
-				<td>Context path</td>
-				<td><input type="text" id="contextPath" value="bosh/" />
+				<td style='padding:5px'>Context path</td>
+				<td style='padding:5px'><input type="text" id="contextPath" value="bosh/" />
 				</td>
 			</tr>
 			<tr>
-				<td>JID</td>
-				<td><input type="text" id="jid" value="${requestScope.jid}" />
+				<td style='padding:5px'>JID</td>
+				<td style='padding:5px'><input type="text" id="jid" value="${requestScope.jid}" />
 				</td>
 			</tr>
 			<tr>
-				<td style="padding-right: 10px;">Password</td>
-				<td><input type="password" id="password" value="${requestScope.j_password}" />
+				<td style="style='padding:5px'">Password</td>
+				<td style='padding:5px'><input type="password" id="password" value="${requestScope.j_password}" />
 				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
-				<td><input type="button" id="connect" value="Connect"
+				<td style='padding:5px'><input type="button" id="connect" value="Connect"
 					style="float: right; margin-top: 5px;" />
 				</td>
 			</tr>
@@ -118,17 +118,17 @@ $(document).ready(function() {
 			<ul></ul>
 		</div>
 
-<!-- 日志 -->
-		<div
-			style="position: absolute; left: 0; width: 100%; height: 30%; bottom: 0px;">
-			<div id="logger"
-				style="border: 1px solid; height: 100%; overflow: auto;"></div>
-		</div>
+
+		
 
 	</div>
 	
 	
 	<!-- 联系人窗口 -->
     <div id="roster"></div>
+    
+    <!-- 日志 -->
+			<div id="logger"
+				style="display:none;"></div>
 </body>
 </html>
