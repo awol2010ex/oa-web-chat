@@ -40,16 +40,18 @@ connectionStatuses[Strophe.Status.ATTACHED] = "ATTACHED";
 
 var logger_win =null ;//日志窗口
 
+var roster_win=null ;//联系人窗口
 
 //初始化客户端
 function initComponent(){
 	$("#tabs").tabs();//对话框标签页
 	
 	var buttons ={};//联系人按钮
-	buttons[locale.AddRoster]=addContact;//添加联系人按钮
-	buttons[locale.Disconnect]=disconnect;//断开连接按钮
+	//buttons[locale.AddRoster]=addContact;//添加联系人按钮
+	//buttons[locale.Disconnect]=disconnect;//断开连接按钮
 	
 	//联系人窗口
+	/*
 	$("#roster").dialog({
 		autoOpen: false,
 		buttons: buttons,//按钮设置
@@ -60,6 +62,31 @@ function initComponent(){
 		title: locale.Roster,
 		beforeclose: function() {return isDisconnecting;}
 	});
+    */
+	roster_win =$.ligerDialog.open({ 
+		title:locale.Roster,  
+		target: $("#roster") ,
+		isResize:true ,
+		width: 400,
+		height: 300,
+		modal:false,
+		showMax: true,
+		showToggle: true, 
+		showMin: true,
+		left: $(window).width() -450,
+		top: 20,
+		show :false,
+		buttons:[
+		   {
+			   text :locale.AddRoster  ,onclick :addContact //添加联系人按钮
+		   },
+		   {
+			   text :locale.Disconnect  ,onclick :disconnect //断开连接按钮
+		   }
+	    ]
+		
+	});
+	
 
 	//连接按钮
 	$("#connect").click(function() {
@@ -85,6 +112,8 @@ function initComponent(){
 function f_connect(){
 	$("#connect-form").hide();
 	$("#workspace").show();
+	
+	roster_win.active();//恢复联系人窗口
 	connect();
 }
 
@@ -130,6 +159,8 @@ function connect() {
 			$("#workspace").hide();
 			$("#connect-form").show();
 			$("#logger").empty();
+			
+			roster_win.min();//隐藏联系人窗口
 		}
 	});
 }
@@ -142,7 +173,8 @@ function userConnected() {
 	// handle presence
 	connection.addHandler(presenceReceived, null, "presence");	
 	isDisconnecting = false;
-	$("#roster").dialog("open");	//打开联系人窗口
+	//$("#roster").dialog("open");	//打开联系人窗口
+	roster_win.active();//恢复联系人窗口
 }
 //取得联系人
 function getRoster() {
@@ -237,7 +269,8 @@ function verifyChatTab(jid) {
 //断开连接
 function disconnect() {
 	isDisconnecting = true;
-	$("#roster").dialog("close");
+	//$("#roster").dialog("close");
+	roster_win.min();//隐藏联系人窗口
 	$("#roster").empty();
 	
  	log("Disconnecting...");

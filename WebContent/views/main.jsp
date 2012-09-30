@@ -125,10 +125,9 @@ $(document).ready(function() {
 	
 	
 	<!-- 联系人窗口 -->
-    <div id="roster"></div>
+    <div id="roster" style="display:none;"></div>
     
     <!-- 日志 -->
-			<div id="logger"
-				style="display:none;"></div>
+	<div id="logger" style="display:none;"></div>
 </body>
 </html>
