@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link type="text/css" href="<%=contextPath %>/static/resources/jquery/css/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
 <script type="text/javascript">
 
 //this is needed by flXHR to automatically include its dependencies
@@ -22,7 +21,6 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 
 
 <script src="<%=contextPath %>/static/scripts/jquery-1.7.2.min.js"></script>
-<script src="<%=contextPath %>/static/resources/jquery/jquery-ui-1.8.2.custom.min.js"></script>
 <script src="<%=contextPath %>/static/resources/flxhr/flensed.js"></script>
 <script src="<%=contextPath %>/static/resources/flxhr/flXHR.js"></script>
 <script src="<%=contextPath %>/static/resources/strophe/core.js"></script>
@@ -114,7 +112,7 @@ $(document).ready(function() {
 
 		
 <!-- 对话 -->
-		<div id="tabs" style="width: 50%; height: 400px; display: none;">
+		<div id="tabs" style=" border:1px solid #A3C0E8;width: 50%; height: 400px; display: none;">
 			<ul></ul>
 		</div>
 

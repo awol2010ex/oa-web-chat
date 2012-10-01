@@ -42,9 +42,15 @@ var logger_win =null ;//日志窗口
 
 var roster_win=null ;//联系人窗口
 
+var tabs_manager =null ;//标签页管理器
+
 //初始化客户端
 function initComponent(){
-	$("#tabs").tabs();//对话框标签页
+	//$("#tabs").tabs();//对话框标签页
+	
+	//标签页
+    $("#tabs").ligerTab({changeHeightOnResize:true,dragToMove:true,dblClickToClose:true});
+    tabs_manager = $("#tabs").ligerGetTabManager();
 	
 	var buttons ={};//联系人按钮
 	//buttons[locale.AddRoster]=addContact;//添加联系人按钮
@@ -90,7 +96,7 @@ function initComponent(){
 
 	//连接按钮
 	$("#connect").click(function() {
-		f_connect();
+		f_connect();//连接方法
 	});
 	
 	//日志窗口
@@ -114,7 +120,7 @@ function f_connect(){
 	$("#workspace").show();
 	
 	roster_win.active();//恢复联系人窗口
-	connect();
+	connect();//建立服务器的连接
 }
 
 function formatTime(val) {
@@ -132,6 +138,8 @@ function log(msg, xml) {
 		m += ": " + xml;
 	}
 	m += "<br/>";
+	
+	//输出日志到页面
 	$("#logger").append(m);
 	$("#logger").get(0).scrollTop = $("#logger").get(0).scrollHeight;
 }
@@ -234,27 +242,42 @@ function messageReceived(msg) {
 //发送信息
 function showMessage(tabId, authorJid, text) {
 	var bareJid = Strophe.getBareJidFromJid(authorJid);
-	var chat = $("#chat" + tabId + " > div");
-	if (chat.length === 0) {
+	//var chat = $("#chat" + tabId + " > div");
+	var chatcontent =$(".l-tab-content > div[tabid ='chat"+tabId+"'] >div");//对话内容DIV
+	
+	if (chatcontent.length === 0) {
 		return;
 	}
-	chat.append("<div><b>" + bareJid + "</b>: " + text + "</div>");
-	chat.get(0).scrollTop = chat.get(0).scrollHeight;
-	$("#tabs").tabs("select", "#chat" + tabId);
-	$("#chat" + tabId + " > input").focus();
+	chatcontent.append("<div style='padding:5px'><b>" + bareJid + "</b>: " + text + "</div>");
+	chatcontent.get(0).scrollTop = chatcontent.get(0).scrollHeight;
+	//$("#tabs").tabs("select", "#chat" + tabId);
+	//选中一个tab
+	tabs_manager.selectTabItem("chat" + tabId);
+	
+	//对话输入框焦点
+	$(".l-tab-content > div[tabid ='chat"+tabId+"']>input").focus();
 }
 
 
 //验证对话框
 function verifyChatTab(jid) {
-	var id = jid2id(jid);
+	var id = jid2id(jid);//JID
 	var bareJid = Strophe.getBareJidFromJid(jid);
 	$("#tabs").show();
-	if ($("#chat" + id).length === 0) {
-		$("#tabs").tabs("add", "#chat" + id, bareJid);
-		$("#chat" + id).append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><input type='text' style='width: 100%;'/>");
-		$("#chat" + id).data("jid", jid);
-		$("#chat" + id + " > input").keydown(function(event) {
+	
+	var chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
+	if (chat.length === 0) {
+		//$("#tabs").tabs("add", "#chat" + id, bareJid);
+		//添加一个tab
+		tabs_manager.addTabItem({tabid:"chat"+id,text :bareJid}); 
+		
+		//对话窗口
+		chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
+		
+		
+		chat.append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><input type='text' style='width: 100%;'/>");
+		chat.data("jid", jid);
+		$(".l-tab-content > div[tabid =chat'"+id+"']>input").keydown(function(event) {
 			if (event.which === 13) {
 				event.preventDefault();
 				sendMessage($(this).parent().data("jid"), $(this).val());
@@ -262,8 +285,12 @@ function verifyChatTab(jid) {
 			}
 		});
 	}
-	$("#tabs").tabs("select", "#chat" + id);
-	$("#chat" + id + " > input").focus();
+	//$("#tabs").tabs("select", "#chat" + id);
+	//选中一个tab
+	tabs_manager.selectTabItem("chat" + id);
+	
+	//对话输入框焦点
+	$(".l-tab-content > div[tabid =chat'"+id+"']>input").focus();
 }
 
 //断开连接
