@@ -155,12 +155,12 @@ function connect() {
 	contextPath = $("#contextPath").val();
 	jid = $("#jid").val();
 	password = $("#password").val();
-	log("Connecting to <b>" + server + ":" + port + "/" + contextPath + "</b> as <b>" + jid + "</b>...");
+	log("连接到 <b>" + server + ":" + port + "/" + contextPath + "</b> as <b>" + jid + "</b>...");
 	
 	connection = new Strophe.Connection("http://" + server + ":" + port + "/" + contextPath);
 
 	connection.connect(jid, password, function(status) {
-		log("Connection status: " + connectionStatuses[status]);
+		log("连接状态: " + connectionStatuses[status]);
 		if (status === Strophe.Status.CONNECTED) {//已连接
 			userConnected();
 		} else if (status === Strophe.Status.DISCONNECTED) {//连接断开
@@ -187,12 +187,12 @@ function userConnected() {
 //取得联系人
 function getRoster() {
 	var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
-	log("Requesting roster", iq.toString());
+	log("正在获取联系人列表", iq.toString());
 	connection.sendIQ(iq, rosterReceived);
 }
 //获得信息
 function rosterReceived(iq) {
-	log("Received roster", Strophe.serialize(iq));
+	log("已收到接收人:", Strophe.serialize(iq));
 	$("#roster").empty();
 
 	$(iq).find("item").each(function() {
@@ -202,7 +202,7 @@ function rosterReceived(iq) {
 		}
 		addToRoster($(this).attr('jid'));
 	});
-	log("Sending my presence", $pres().toString());
+	log("发送我的在线信息:", $pres().toString());
 	connection.send($pres());
 }
 //添加联系人
@@ -228,7 +228,7 @@ function jid2id(jid) {
 
 //接收并显示信息
 function messageReceived(msg) {
-	log("Received chat message", Strophe.serialize(msg));
+	log("已取得对话信息：", Strophe.serialize(msg));
 	var jid = $(msg).attr("from");
 	
 	verifyChatTab(jid);
@@ -300,7 +300,7 @@ function disconnect() {
 	roster_win.min();//隐藏联系人窗口
 	$("#roster").empty();
 	
- 	log("Disconnecting...");
+ 	log("正在断开连接...");
 	
 	connection.send($pres({type: "unavailable"}));
 	connection.flush();
@@ -332,7 +332,7 @@ function sendMessage(toJid, text) {
 
 //接收消息包
 function presenceReceived(presence) {
-	log("Received presence", Strophe.serialize(presence));
+	log("取得在线信息:", Strophe.serialize(presence));
 	var fromJid = $(presence).attr('from');
 	var bareFromJid = Strophe.getBareJidFromJid(fromJid);
 	var type = $(presence).attr('type');
@@ -340,19 +340,19 @@ function presenceReceived(presence) {
 	if (type === "error") {
 		alert("Received presence error!");
 	} else if (type === "subscribe") {
-		if (confirm(fromJid + " wants to subscribe to your presence. Do you allow it?")) {
+		if (confirm(fromJid + " 想加你为好友,是否同意?")) {
 			var pres = $pres({to: fromJid, type: "subscribed"});
-			log("Allowing subscribe", pres.toString());
+			log("同意加为好友:", pres.toString());
 			connection.send(pres);
 			if ($("#roster > div[jid=" + id + "]").length === 0) {
 				addToRoster(fromJid);
 				pres = $pres({to: fromJid, type: "subscribe"});
-				log("Requesting subscribe from " + fromJid, pres.toString());
+				log("正在恢复好友申请..." + fromJid, pres.toString());
 				connection.send(pres);
 			}
 		} else {
 			var pres = $pres({to: fromJid, type: "unsubscribed"});
-			log("Denying subscribe", pres.toString());
+			log("拒绝好友邀请:", pres.toString());
 			connection.send(pres);
 		}
 	} else if (bareFromJid !== jid) {
@@ -363,7 +363,7 @@ function presenceReceived(presence) {
 				contact.text(bareFromJid + " ("+locale.offline+")");
 			} else if (!isOnline && type !== "unavailable") {
 				contact.text(bareFromJid + " ("+locale.online+")");
-				log("Sending presence", $pres().toString());
+				log("正在发送好友申请...", $pres().toString());
 				connection.send($pres());
 			}
 		}
@@ -374,23 +374,23 @@ function presenceReceived(presence) {
 
 //添加联系人
 function addContact() {
-	var toJid = prompt("Please type the JID of the contact you want to add");//输入新的联系人
+	var toJid = prompt("输入联系人JID:");//输入新的联系人
 	var id = jid2id(toJid);
 	if (toJid === null) {
 		return;
 	}
 	if (toJid === jid) {//不能添加自己
-		alert("You cannot add yourself to the roster!");
+		alert("不能添加自己为联系人!");
 		return;
 	}
 	if ($("#roster > div[jid=" + id + "]").length > 0) {
-		alert("JID already present in the roster!");
+		alert("JID 已经在你的联系人列表内!");
 		return;
 	}
 	addToRoster(toJid);//添加联系人
 	
 	//添加联系人的日志
 	var pres = $pres({to: toJid, type: "subscribe"});
-	log("Requesting subscribe to " + toJid, pres.toString());
+	log("正在请求添加联系人... " + toJid, pres.toString());
 	connection.send(pres);
 }
