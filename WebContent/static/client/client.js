@@ -207,10 +207,10 @@ function rosterReceived(iq) {
 }
 //添加联系人
 function addToRoster(jid) {
-	var id = jid2id(jid);
+	var id = jid2id(jid);//去掉@等符号
 	$("#roster").append("<div style='cursor: pointer;' jid='" + id + "'>" + jid + " ("+locale.offline+")</div>");
 	$("#roster > div[jid=" + id + "]").click(function() {
-		chatWith(jid);
+		chatWith(jid);//点击与选择的人对话
 	});
 	$("#roster > div[jid=" + id + "]").hover(function() {
 		$(this).css("color", "red");
@@ -298,10 +298,11 @@ function disconnect() {
 	isDisconnecting = true;
 	//$("#roster").dialog("close");
 	roster_win.min();//隐藏联系人窗口
-	$("#roster").empty();
+	$("#roster").empty();//清空联系人窗口
 	
  	log("正在断开连接...");
 	
+ 	//发送离线信息
 	connection.send($pres({type: "unavailable"}));
 	connection.flush();
 	connection.disconnect();
