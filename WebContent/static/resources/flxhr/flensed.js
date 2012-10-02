@@ -9,4 +9,181 @@
 	Copyright (c) 2007-2008 Geoff Stearns, Michael Williams, and Bobby van der Sluis
 	This software is released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
 */
-(function(B){var H=B,L=B.document,N="undefined",M=true,C=false,E="",F="object",D="string",G=null,J=null,I=null,K=B.parseInt,A=B.setTimeout;if(typeof B.flensed===N){B.flensed={}}else{if(typeof B.flensed.ua!==N){return}}G=B.flensed;A(function(){var P="flensed.js",U=C,R=L.getElementsByTagName("script"),T=R.length;try{G.base_path.toLowerCase();U=M}catch(S){G.base_path=E}if((typeof R!==N)&&(R!==null)){if(!U){var O=0;for(var Q=0;Q<T;Q++){if(typeof R[Q].src!==N){if((O=R[Q].src.indexOf(P))>=0){G.base_path=R[Q].src.substr(0,O);break}}}}}},0);G.parseXMLString=function(P){var O=null;if(H.ActiveXObject){O=new B.ActiveXObject("Microsoft.XMLDOM");O.async=C;O.loadXML(P)}else{var Q=new B.DOMParser();O=Q.parseFromString(P,"text/xml")}return O};G.getObjectById=function(O){try{if(L.layers){return L.layers[O]}else{if(L.all){return L.all[O]}else{if(L.getElementById){return L.getElementById(O)}}}}catch(P){}return null};G.createCSS=function(T,P,U,S){if(G.ua.ie&&G.ua.mac){return}var R=L.getElementsByTagName("head")[0];if(!R){return}var O=(U&&typeof U===D)?U:"screen";if(S){J=null;I=null}if(!J||I!==O){var Q=L.createElement("style");Q.setAttribute("type","text/css");Q.setAttribute("media",O);J=R.appendChild(Q);if(G.ua.ie&&G.ua.win&&typeof L.styleSheets!==N&&L.styleSheets.length>0){J=L.styleSheets[L.styleSheets.length-1]}I=O}if(G.ua.ie&&G.ua.win){if(J&&typeof J.addRule===F){J.addRule(T,P)}}else{if(J&&typeof L.createTextNode!==N){J.appendChild(L.createTextNode(T+" {"+P+"}"))}}};G.bindEvent=function(R,O,Q){O=O.toLowerCase();try{if(typeof R.addEventListener!==N){R.addEventListener(O.replace(/^on/,E),Q,C)}else{if(typeof R.attachEvent!==N){R.attachEvent(O,Q)}}}catch(P){}};G.unbindEvent=function(R,O,Q){O=O.toLowerCase();try{if(typeof R.removeEventListener!==N){R.removeEventListener(O.replace(/^on/,E),Q,C)}else{if(typeof R.detachEvent!==N){R.detachEvent(O,Q)}}}catch(P){}};G.throwUnhandledError=function(O){throw new B.Error(O)};G.error=function(R,P,Q,O){return{number:R,name:P,description:Q,message:Q,srcElement:O,toString:function(){return R+", "+P+", "+Q}}};G.ua=function(){var U="Shockwave Flash",O="ShockwaveFlash.ShockwaveFlash",Y="application/x-shockwave-flash",P=B.navigator,V=typeof L.getElementById!==N&&typeof L.getElementsByTagName!==N&&typeof L.createElement!==N,f=[0,0,0],X=null;if(typeof P.plugins!==N&&typeof P.plugins[U]===F){X=P.plugins[U].description;if(X&&!(typeof P.mimeTypes!==N&&P.mimeTypes[Y]&&!P.mimeTypes[Y].enabledPlugin)){X=X.replace(/^.*\s+(\S+\s+\S+$)/,"$1");f[0]=K(X.replace(/^(.*)\..*$/,"$1"),10);f[1]=K(X.replace(/^.*\.(.*)\s.*$/,"$1"),10);f[2]=/r/.test(X)?K(X.replace(/^.*r(.*)$/,"$1"),10):0}}else{if(typeof H.ActiveXObject!==N){try{var Z=new B.ActiveXObject(O);if(Z){X=Z.GetVariable("$version");if(X){X=X.split(" ")[1].split(",");f=[K(X[0],10),K(X[1],10),K(X[2],10)]}}}catch(T){}}}var e=P.userAgent.toLowerCase(),S=P.platform.toLowerCase(),c=/webkit/.test(e)?parseFloat(e.replace(/^.*webkit\/(\d+(\.\d+)?).*$/,"$1")):C,Q=C,R=0,b=S?/win/.test(S):/win/.test(e),W=S?/mac/.test(S):/mac/.test(e);/*@cc_on Q=M;try{R=K(e.match(/msie (\d+)/)[1],10);}catch(e2){}@if(@_win32)b=M;@elif(@_mac)W=M;@end @*/return{w3cdom:V,pv:f,webkit:c,ie:Q,ieVer:R,win:b,mac:W}}()})(window);
+
+(function(global){
+	// frequently used variable declarations, for optimized compression
+	var win = global,
+		doc = global.document,
+		UNDEF = "undefined",
+		JSTRUE = true,
+		JSFALSE = false,
+		EMPTY = "",
+		OBJECT = "object",
+		JSSTR = "string",
+		_flensed = null,
+		dynamicStylesheet = null,
+		dynamicStylesheetMedia = null,
+		PARSEINT = global.parseInt,
+		SETTIMEOUT = global.setTimeout;
+
+	if (typeof global.flensed === UNDEF) { global.flensed = {}; }
+	else if (typeof global.flensed.ua !== UNDEF) { return; }	// flensed already defined, so quit
+
+	_flensed = global.flensed;
+
+	SETTIMEOUT(function() {
+		var this_script = "flensed.js",		// DO NOT rename this file or change this line.
+			base_path_known = JSFALSE,
+			scriptArry = doc.getElementsByTagName("script"),
+			scrlen = scriptArry.length;
+		try { _flensed.base_path.toLowerCase(); base_path_known = JSTRUE; } catch(err) { _flensed.base_path = EMPTY; }
+		
+		if ((typeof scriptArry !== UNDEF) && (scriptArry !== null)) {
+			if (!base_path_known) {
+				var idx=0;
+				for (var k=0; k<scrlen; k++) {
+					if (typeof scriptArry[k].src !== UNDEF) {
+						if ((idx=scriptArry[k].src.indexOf(this_script)) >= 0) {
+							_flensed.base_path = scriptArry[k].src.substr(0,idx);
+							break;
+						}
+					}
+				}
+			}
+		}
+	},0);
+	
+	_flensed.parseXMLString = function(xmlStr) {
+		var xmlDoc = null;
+		if (win.ActiveXObject) {
+			xmlDoc = new global.ActiveXObject("Microsoft.XMLDOM"); 
+			xmlDoc.async=JSFALSE;
+			xmlDoc.loadXML(xmlStr);
+		}
+		else {
+			var parser = new global.DOMParser();
+			xmlDoc = parser.parseFromString(xmlStr,"text/xml");
+		}
+		return xmlDoc;
+	};
+	_flensed.getObjectById = function(idStr) {
+		try {
+			if (doc.layers) { return doc.layers[idStr]; }
+			else if (doc.all) { return doc.all[idStr]; }
+			else if (doc.getElementById) { return doc.getElementById(idStr); }
+		}
+		catch (err) { }
+		return null;
+	};
+	
+	_flensed.createCSS = function(sel, decl, media, newStyle) {
+		if (_flensed.ua.ie && _flensed.ua.mac) { return; }
+		var h = doc.getElementsByTagName("head")[0];
+		if (!h) { return; } // to also support badly authored HTML pages that lack a head element
+		var m = (media && typeof media === JSSTR) ? media : "screen";
+		if (newStyle) {
+			dynamicStylesheet = null;
+			dynamicStylesheetMedia = null;
+		}
+		if (!dynamicStylesheet || dynamicStylesheetMedia !== m) { 
+			// create dynamic stylesheet + get a global reference to it
+			var s = doc.createElement("style");
+			s.setAttribute("type", "text/css");
+			s.setAttribute("media", m);
+			dynamicStylesheet = h.appendChild(s);
+			if (_flensed.ua.ie && _flensed.ua.win && typeof doc.styleSheets !== UNDEF && doc.styleSheets.length > 0) {
+				dynamicStylesheet = doc.styleSheets[doc.styleSheets.length - 1];
+			}
+			dynamicStylesheetMedia = m;
+		}
+		// add style rule
+		if (_flensed.ua.ie && _flensed.ua.win) {
+			if (dynamicStylesheet && typeof dynamicStylesheet.addRule === OBJECT) {
+				dynamicStylesheet.addRule(sel, decl);
+			}
+		}
+		else {
+			if (dynamicStylesheet && typeof doc.createTextNode !== UNDEF) {
+				dynamicStylesheet.appendChild(doc.createTextNode(sel + " {" + decl + "}"));
+			}
+		}
+	};
+	_flensed.bindEvent = function(obj,eventName,handlerFunc) {
+		eventName = eventName.toLowerCase();
+		try {
+			if (typeof obj.addEventListener !== UNDEF) { obj.addEventListener(eventName.replace(/^on/,EMPTY),handlerFunc,JSFALSE); }
+			else if (typeof obj.attachEvent !== UNDEF) { obj.attachEvent(eventName,handlerFunc); }
+		} catch (err) { }
+	};
+	_flensed.unbindEvent = function(obj,eventName,handlerFunc) {
+		eventName = eventName.toLowerCase();
+		try {
+			if (typeof obj.removeEventListener !== UNDEF) { obj.removeEventListener(eventName.replace(/^on/,EMPTY),handlerFunc,JSFALSE); }
+			else if (typeof obj.detachEvent !== UNDEF) { obj.detachEvent(eventName,handlerFunc); }
+		} catch (err) { }
+	};
+	_flensed.throwUnhandledError = function(errDescription) {
+		throw new global.Error(errDescription);
+	};
+	_flensed.error = function(code,name,description,srcElement) {
+		return {
+			number:code,
+			name:name,
+			description:description,
+			message:description,
+			srcElement:srcElement,
+			toString:function() { return code+", "+name+", "+description; }
+		};
+	};
+	_flensed.ua = function() {
+		var	SHOCKWAVE_FLASH = "Shockwave Flash",
+			SHOCKWAVE_FLASH_AX = "ShockwaveFlash.ShockwaveFlash",
+			FLASH_MIME_TYPE = "application/x-shockwave-flash",
+			nav = global.navigator,
+			w3cdom = typeof doc.getElementById !== UNDEF && typeof doc.getElementsByTagName !== UNDEF && typeof doc.createElement !== UNDEF,
+			playerVersion = [0,0,0],
+			d = null;
+		if (typeof nav.plugins !== UNDEF && typeof nav.plugins[SHOCKWAVE_FLASH] === OBJECT) {
+			d = nav.plugins[SHOCKWAVE_FLASH].description;
+			if (d && !(typeof nav.mimeTypes !== UNDEF && nav.mimeTypes[FLASH_MIME_TYPE] && !nav.mimeTypes[FLASH_MIME_TYPE].enabledPlugin)) { 
+			// navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin indicates whether plug-ins are enabled or disabled in Safari 3+
+				//plugin = JSTRUE;
+				d = d.replace(/^.*\s+(\S+\s+\S+$)/, "$1");
+				playerVersion[0] = PARSEINT(d.replace(/^(.*)\..*$/, "$1"), 10);
+				playerVersion[1] = PARSEINT(d.replace(/^.*\.(.*)\s.*$/, "$1"), 10);
+				playerVersion[2] = /r/.test(d) ? PARSEINT(d.replace(/^.*r(.*)$/, "$1"), 10) : 0;
+			}
+		}
+		else if (typeof win.ActiveXObject !== UNDEF) {
+			try {
+				var a = new global.ActiveXObject(SHOCKWAVE_FLASH_AX);
+				if (a) { // a will return null when ActiveX is disabled
+					d = a.GetVariable("$version");
+					if (d) {
+						d = d.split(" ")[1].split(",");
+						playerVersion = [PARSEINT(d[0], 10), PARSEINT(d[1], 10), PARSEINT(d[2], 10)];
+					}
+				}
+			}
+			catch(err) {}
+		}
+		var u = nav.userAgent.toLowerCase(),
+			p = nav.platform.toLowerCase(),
+			webkit = /webkit/.test(u) ? parseFloat(u.replace(/^.*webkit\/(\d+(\.\d+)?).*$/, "$1")) : JSFALSE, // returns either the webkit version or false if not webkit
+			ie = JSFALSE,
+			ieVer = 0,
+			windows = p ? /win/.test(p) : /win/.test(u),
+			mac = p ? /mac/.test(p) : /mac/.test(u);
+		/*@cc_on
+			ie = JSTRUE;
+			try { ieVer = PARSEINT(u.match(/msie (\d+)/)[1],10); } catch (err2) { }
+			@if (@_win32)
+				windows = JSTRUE;
+			@elif (@_mac)
+				mac = JSTRUE;
+			@end
+		@*/
+		return { w3cdom:w3cdom, pv:playerVersion, webkit:webkit, ie:ie, ieVer:ieVer, win:windows, mac:mac };
+	}();
+
+})(window);

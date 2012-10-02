@@ -3,15 +3,10 @@
 <%
 	String contextPath = request.getContextPath();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript">
 
-//this is needed by flXHR to automatically include its dependencies
-if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/flxhr/";
-</script>
 
 
 <link rel="stylesheet" type="text/css"
@@ -20,15 +15,9 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 	href="<%=contextPath%>/static/skins/Aqua/css/ligerui-all.css" />
 
 
-<script src="<%=contextPath %>/static/scripts/jquery-1.7.2.min.js"></script>
-<script src="<%=contextPath %>/static/resources/flxhr/flensed.js"></script>
-<script src="<%=contextPath %>/static/resources/flxhr/flXHR.js"></script>
-<script src="<%=contextPath %>/static/resources/strophe/core.js"></script>
-<script src="<%=contextPath %>/static/resources/strophe/base64.js"></script>
-<script src="<%=contextPath %>/static/resources/strophe/md5.js"></script>
-<script src="<%=contextPath %>/static/resources/strophe/strophe.flxhr.js"></script>
-<script src="<%=contextPath %>/static/client/client.js"></script>
-<script src="<%=contextPath %>/static/client/locale_zh.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/scripts/jquery-1.7.2.min.js"></script>
+
+
 
 
 
@@ -59,6 +48,24 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/ligerui/plugins/ligerWindow.js"></script> 
 
 <script type="text/javascript">
+
+//this is needed by flXHR to automatically include its dependencies
+if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/flxhr/";
+</script>
+<script type="text/javascript" src="<%=contextPath %>/static/resources/flxhr/flensed.js"></script>
+
+
+
+<script type="text/javascript" src="<%=contextPath %>/static/resources/flxhr/flXHR.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/resources/strophe/core.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/resources/strophe/base64.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/resources/strophe/md5.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/resources/strophe/strophe.flxhr.js"></script>
+
+<script type="text/javascript" src="<%=contextPath %>/static/client/locale_zh.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/client/client.js"></script>
+
+<script type="text/javascript">
 $(document).ready(function() {
 	//初始化客户端
 	initComponent();
@@ -86,7 +93,7 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td style='padding:5px'>Context path</td>
-				<td style='padding:5px'><input type="text" id="contextPath" value="bosh/" />
+				<td style='padding:5px'><input type="text" id="boshContextPath" value="bosh/" />
 				</td>
 			</tr>
 			<tr>

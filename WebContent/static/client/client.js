@@ -152,7 +152,7 @@ Strophe.log = function (level, msg) {
 function connect() {
 	server = $("#server").val();
 	port = $("#port").val();
-	contextPath = $("#contextPath").val();
+	contextPath = $("#boshContextPath").val();
 	jid = $("#jid").val();
 	password = $("#password").val();
 	log("连接到 <b>" + server + ":" + port + "/" + contextPath + "</b> as <b>" + jid + "</b>...");
