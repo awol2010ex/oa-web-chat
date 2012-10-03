@@ -156,7 +156,7 @@ function connect() {
 	jid = $("#jid").val();
 	password = $("#password").val();
 	log("连接到 <b>" + server + ":" + port + "/" + contextPath + "</b> as <b>" + jid + "</b>...");
-	
+	//连接对象
 	connection = new Strophe.Connection("http://" + server + ":" + port + "/" + contextPath);
 
 	connection.connect(jid, password, function(status) {
@@ -174,7 +174,7 @@ function connect() {
 }
 //用户连接
 function userConnected() {
-	getRoster();
+	getRoster();//取得联系人列表
 	// handle received messages
 	connection.addHandler(messageReceived, null, "message", "chat");
 	
@@ -194,9 +194,10 @@ function getRoster() {
 function rosterReceived(iq) {
 	log("已收到接收人:", Strophe.serialize(iq));
 	$("#roster").empty();
-
+	debugger;
 	$(iq).find("item").each(function() {
 		// if a contact is still pending subscription then do not show it in the list
+		
 		if ($(this).attr('ask')) {
 			return true;
 		}
@@ -255,7 +256,7 @@ function showMessage(tabId, authorJid, text) {
 	tabs_manager.selectTabItem("chat" + tabId);
 	
 	//对话输入框焦点
-	$(".l-tab-content > div[tabid ='chat"+tabId+"']>input").focus();
+	$(".l-tab-content > div[tabid ='chat"+tabId+"']>textarea").focus();
 }
 
 
@@ -275,9 +276,9 @@ function verifyChatTab(jid) {
 		chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
 		
 		
-		chat.append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><input type='text' style='width: 100%;'/>");
+		chat.append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><textarea style='width: 100%;height:110px'/>");
 		chat.data("jid", jid);
-		$(".l-tab-content > div[tabid =chat'"+id+"']>input").keydown(function(event) {
+		$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").keydown(function(event) {
 			if (event.which === 13) {
 				event.preventDefault();
 				sendMessage($(this).parent().data("jid"), $(this).val());
@@ -290,7 +291,7 @@ function verifyChatTab(jid) {
 	tabs_manager.selectTabItem("chat" + id);
 	
 	//对话输入框焦点
-	$(".l-tab-content > div[tabid =chat'"+id+"']>input").focus();
+	$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").focus();
 }
 
 //断开连接
@@ -311,7 +312,7 @@ function disconnect() {
 
 //与某人对话
 function chatWith(toJid) {
-	log("Chatting with " + toJid + "...");
+	log("正在与 " + toJid + "对话...");
 	verifyChatTab(toJid);
 }
 
@@ -323,7 +324,7 @@ function sendMessage(toJid, text) {
     
     
     //日志
-    log("Sending message", Strophe.serialize(msg));
+    log("正在发送信息:", Strophe.serialize(msg));
     
     
     //发送信息
