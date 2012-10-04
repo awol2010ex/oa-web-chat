@@ -18,6 +18,10 @@
  *
  */
 
+//等待窗口
+var  waiting=null;
+//
+
 var server;
 var port;
 var jid;

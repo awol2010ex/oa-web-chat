@@ -138,5 +138,12 @@ $(document).ready(function() {
     
     <!-- 日志 -->
 	<div id="logger" style="display:none;"></div>
+	
+	
+	<!-- vcard窗口 -->
+    <div id="vcard_win"
+		style="width: 400px; height: 300px; margin: 3px;  display: none;">
+		<form id="vcard_form"></form>
+    </div>
 </body>
 </html>
