@@ -39,12 +39,15 @@ public class OARosterManager implements RosterManager,
 	@Autowired
 	IOARosterGroupDAO oaRosterGroupDAO;// 联系人分组操作
 
+	//取得服务ID
 	@Override
 	public String getServiceName() {
 		// TODO Auto-generated method stub
 		return "oaRosterManager";
 	}
 
+	
+	//添加联系人操作
 	@Override
 	public void addContact(Entity entity, RosterItem rosterItem)
 			throws RosterException {
@@ -159,6 +162,25 @@ public class OARosterManager implements RosterManager,
 				try {
 					RosterItem item = new RosterItem(EntityImpl.parse(r
 							.getContact()), SubscriptionType.BOTH);// 构造联系人对象
+					
+					List<OARosterGroup> groupList=null;//分组列表
+					
+					try {
+						groupList=oaRosterGroupDAO.getRosterGroupList(r.getId());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						logger.error("",e);
+					}
+					
+					//输出联系人分组
+					if(groupList!=null && groupList.size()>0){
+						List<RosterGroup>  gList =new ArrayList<RosterGroup>();
+						for(OARosterGroup group :groupList){
+							RosterGroup g =new RosterGroup(group.getGroupname());
+							gList.add(g);
+						}
+						item.setGroups(gList);
+					}
 
 					roster.addItem(item);
 				} catch (EntityFormatException e) {

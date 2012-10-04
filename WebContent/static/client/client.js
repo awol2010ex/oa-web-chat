@@ -69,6 +69,8 @@ function initComponent(){
 		beforeclose: function() {return isDisconnecting;}
 	});
     */
+	
+	//联系人窗口
 	roster_win =$.ligerDialog.open({ 
 		title:locale.Roster,  
 		target: $("#roster") ,
@@ -190,30 +192,46 @@ function getRoster() {
 	log("正在获取联系人列表", iq.toString());
 	connection.sendIQ(iq, rosterReceived);
 }
+
+
+var rosterGroupMap ={} ;//联系人组映射
+
 //获得信息
 function rosterReceived(iq) {
 	log("已收到接收人:", Strophe.serialize(iq));
 	$("#roster").empty();
-	debugger;
+	
+	
+	rosterGroupMap={};
+	
 	$(iq).find("item").each(function() {
 		// if a contact is still pending subscription then do not show it in the list
 		
 		if ($(this).attr('ask')) {
 			return true;
 		}
-		addToRoster($(this).attr('jid'));
+		//展示添加的联系人
+		addToRoster($(this).attr('jid'),$(this).find("group").text());
 	});
 	log("发送我的在线信息:", $pres().toString());
 	connection.send($pres());
 }
 //添加联系人
-function addToRoster(jid) {
+function addToRoster(jid,group) {
 	var id = jid2id(jid);//去掉@等符号
-	$("#roster").append("<div style='cursor: pointer;' jid='" + id + "'>" + jid + " ("+locale.offline+")</div>");
-	$("#roster > div[jid=" + id + "]").click(function() {
+	
+	var groupname =group?group:"未分组";
+	if(!rosterGroupMap[groupname]){//添加联系人分组
+		$("#roster").append("<div style='padding:5px;' ><img src='"+window.basePath+"/static/images/roster_group.png'>&nbsp;"+groupname+"</div>");
+		rosterGroupMap[groupname]=true;
+		
+	}
+	
+	$("#roster").append("<div style='padding:5px;' jid='" + id + "'>&nbsp;&nbsp;&nbsp;&nbsp;<img style='cursor: pointer;' src='"+window.basePath+"/static/images/roster.png'><a style='cursor: pointer;'>"+ jid + " ("+locale.offline+")</a></div>");
+	$("#roster > div[jid=" + id + "]>a").click(function() {
 		chatWith(jid);//点击与选择的人对话
 	});
-	$("#roster > div[jid=" + id + "]").hover(function() {
+	$("#roster > div[jid=" + id + "]>a").hover(function() {
 		$(this).css("color", "red");
 	}, function() {
 		$(this).css("color", "#333333");
@@ -359,12 +377,13 @@ function presenceReceived(presence) {
 		}
 	} else if (bareFromJid !== jid) {
 		var contact = $("#roster > div[jid=" + id + "]");
+		var a= $("#roster > div[jid=" + id + "]>a")
 		if (contact.length === 1) {
 			var isOnline = contact.text().match(/.+\(online\)/);//是否在线显示
 			if (isOnline && type === "unavailable") {
-				contact.text(bareFromJid + " ("+locale.offline+")");
+				a.text(bareFromJid + " ("+locale.offline+")");
 			} else if (!isOnline && type !== "unavailable") {
-				contact.text(bareFromJid + " ("+locale.online+")");
+				a.text(bareFromJid + " ("+locale.online+")");
 				log("正在发送好友申请...", $pres().toString());
 				connection.send($pres());
 			}

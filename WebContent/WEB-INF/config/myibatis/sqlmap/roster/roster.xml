@@ -8,4 +8,16 @@
 	
 	delete from T_BIZ_OA_ROSTER_GROUP where rosterid = #{rosterid}
 	</delete>
+	
+	
+	<!-- 取得联系人列表 -->
+	<select id='getRosterList'  parameterType="string"  resultType="com.oawebchat.oa.roster.vo.OARoster" >
+	SELECT
+    distinct r.* , g.groupname
+FROM
+    T_BIZ_OA_ROSTER r  
+    left join T_BIZ_OA_ROSTER_GROUP g  on r.id =g.rosterid
+    where r.jid = #{jid}
+    order by g.groupname
+	</select>
 </mapper>

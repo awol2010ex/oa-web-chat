@@ -50,6 +50,8 @@
 <script type="text/javascript">
 
 //this is needed by flXHR to automatically include its dependencies
+window.basePath ="<%=request.getContextPath() %>";
+
 if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/flxhr/";
 </script>
 <script type="text/javascript" src="<%=contextPath %>/static/resources/flxhr/flensed.js"></script>
