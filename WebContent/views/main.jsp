@@ -65,6 +65,8 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 <script type="text/javascript" src="<%=contextPath %>/static/resources/strophe/strophe.flxhr.js"></script>
 
 <script type="text/javascript" src="<%=contextPath %>/static/client/locale_zh.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/client/menu.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/client/vcard.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/client.js"></script>
 
 <script type="text/javascript">

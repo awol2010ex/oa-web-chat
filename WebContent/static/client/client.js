@@ -114,6 +114,10 @@ function initComponent(){
 		showMin: true,
 		fixedType:'n'
 	});
+	
+	
+	//初始化联系人菜单
+	init_roster_menu();
 }
 
 //连接XMPP
@@ -235,6 +239,15 @@ function addToRoster(jid,group) {
 		$(this).css("color", "red");
 	}, function() {
 		$(this).css("color", "#333333");
+	});
+	
+	
+	//点击打开菜单
+	$("#roster > div[jid=" + id + "]>img").bind("contextmenu",function(e) {
+		 roster_menu.show({ top: e.pageY, left: e.pageX });
+		 $(roster_menu.element).css("z-index", "10000").data("jid",jid); 
+		 return false;
+        
 	});
 }
 
