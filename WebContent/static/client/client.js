@@ -90,8 +90,12 @@ function initComponent(){
 		show :false,
 		buttons:[
 		   {
-			   text :locale.AddRoster  ,onclick :addContact //添加联系人按钮
+			   text :locale.AddRoster ,onclick :addContact //添加联系人按钮
 		   },
+		   {
+			   text :"搜索" ,onclick :openSearch //添加联系人按钮
+		   },
+		   
 		   {
 			   text :locale.Disconnect  ,onclick :disconnect //断开连接按钮
 		   }

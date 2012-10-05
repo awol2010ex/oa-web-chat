@@ -45,27 +45,27 @@ function VCardReceived(iq) {
 		labelWidth : 90,
 		space : 40,
 		fields : [ {
-			name : "GIVEN",
+			name : "VCARD_GIVEN",
 			display : "名称",
 			type : "text"
 		}, {
-			name : "ORGNAME",
+			name : "VCARD_ORGNAME",
 			display : "机构",
 			type : "text"
 		}, {
-			name : "REGION",
+			name : "VCARD_REGION",
 			display : "地区",
 			type : "text"
 		}  ]
 	});
 
-	$("#GIVEN").val(GIVEN);// 名称
-	$("#GIVEN").attr("readOnly", true);
+	$("#VCARD_GIVEN").val(GIVEN);// 名称
+	$("#VCARD_GIVEN").attr("readOnly", true);
 
-	$("#ORGNAME").val(ORGNAME);// 机构
-	$("#ORGNAME").attr("readOnly", true);
+	$("#VCARD_ORGNAME").val(ORGNAME);// 机构
+	$("#VCARD_ORGNAME").attr("readOnly", true);
 	
-	$("#REGION").val(REGION);//地区
-	$("#REGION").attr("readOnly", true);
+	$("#VCARD_REGION").val(REGION);//地区
+	$("#VCARD_REGION").attr("readOnly", true);
 
 }

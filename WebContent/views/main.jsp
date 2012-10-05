@@ -68,6 +68,7 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 <script type="text/javascript" src="<%=contextPath %>/static/client/menu.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/vcard.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/client.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/client/search.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -144,6 +145,30 @@ $(document).ready(function() {
     <div id="vcard_win"
 		style="width: 400px; height: 300px; margin: 3px;  display: none;">
 		<form id="vcard_form"></form>
+    </div>
+    
+    <!-- jabber search窗口 -->
+    <div id='search_win' style='width:800px;height:300px;display:none'>
+        <table width="95%" height="90%">
+            <tr>
+              <td width="40%" valign="top" align="left">
+                <form id="search_form" />
+              </td>
+              
+              <td width="60%" valign="top" align="left" rowspan="2">
+              
+                <div id='search_result_grid'></div>
+              </td>
+              
+            
+            </tr>
+            <tr>
+              <td valign="top" align="left">
+                  <div id="search_btn"></div>
+                  
+              </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
