@@ -30,7 +30,7 @@ function VCardReceived(iq) {
 
 	log("已收到VCARD:", Strophe.serialize(iq));
 	$.ligerDialog.open({
-		title : "参数设置",
+		title : "联系人信息",
 		target : $("#vcard_win"),
 		isResize : true,
 		width : 400,
@@ -39,7 +39,7 @@ function VCardReceived(iq) {
 
 	var GIVEN = $(iq).find("vCard >N>GIVEN ").text();// 名称
 	var ORGNAME = $(iq).find("vCard >ORG>ORGNAME ").text();// 机构
-
+    var REGION = $(iq).find("vCard >ADR>REGION").first().text();// 地区
 	$("#vcard_form").ligerForm({
 		inputWidth : 170,
 		labelWidth : 90,
@@ -52,7 +52,11 @@ function VCardReceived(iq) {
 			name : "ORGNAME",
 			display : "机构",
 			type : "text"
-		} ]
+		}, {
+			name : "REGION",
+			display : "地区",
+			type : "text"
+		}  ]
 	});
 
 	$("#GIVEN").val(GIVEN);// 名称
@@ -60,5 +64,8 @@ function VCardReceived(iq) {
 
 	$("#ORGNAME").val(ORGNAME);// 机构
 	$("#ORGNAME").attr("readOnly", true);
+	
+	$("#REGION").val(REGION);//地区
+	$("#REGION").attr("readOnly", true);
 
 }
