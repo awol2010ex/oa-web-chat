@@ -6,11 +6,17 @@ function init_roster_menu() {
 		top : 100,
 		left : 100,
 		width : 120,
-		items : [ {
+		items : [ 
+		  {
 			text : '查看资料',
 			click : showVCard,
 			icon : 'search'
-		}
+		  },
+		  {
+		    text : '删除联系人',
+			click : removeRoster,
+			icon : 'delete'
+		  }
 
 		]
 	});

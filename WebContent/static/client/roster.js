@@ -59,3 +59,10 @@ function addToRoster(jid,group) {
 	});
 }
 
+
+
+//删除联系人
+function removeRoster(){
+	var r_jid = $(roster_menu.element).data("jid");// 联系人JID
+}
+
