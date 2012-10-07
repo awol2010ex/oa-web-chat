@@ -86,3 +86,51 @@ function afterRemoveRoster(iq){
 	getRoster();
 }
 
+//添加而不邀请联系人
+function addContactOnly(){
+	var toJid = prompt("输入联系人JID:");//输入新的联系人
+	var id = jid2id(toJid);
+	if (toJid === null) {
+		return;
+	}
+	
+	var toGroup=null;
+	toGroup = prompt("输入联系人分组:");//输入新的联系人分组
+	if(toGroup==''){
+		toGroup=null;
+	}
+	
+	
+	if (toJid === jid) {//不能添加自己
+		alert("不能添加自己为联系人!");
+		return;
+	}
+	if ($("#roster > div[jid=" + id + "]").length > 0) {
+		alert("JID 已经在你的联系人列表内!");
+		return;
+	}
+	addToRosterOnly(toJid,toGroup);//添加联系人
+}
+
+//添加而不邀请联系人
+function addToRosterOnly(jid , group){
+	var iq = $iq({type: 'set'})
+	.c('query', {xmlns: 'jabber:iq:roster'})
+	.c('item',{jid:jid});//要删除的联系人JID
+	
+	if(group){
+		//分组
+		iq.c("group").t(group);
+	}
+	log("正在添加联系人..", iq.toString());
+	
+	connection.sendIQ(iq, afterAddToRosterOnly);
+}
+//添加而不邀请联系人
+function afterAddToRosterOnly(iq){
+    log("已收到添加联系人后信息:", Strophe.serialize(iq));
+	
+	//刷新联系人窗口
+	getRoster();
+}
+

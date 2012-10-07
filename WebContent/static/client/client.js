@@ -89,8 +89,11 @@ function initComponent(){
 		top: 20,
 		show :false,
 		buttons:[
+           {
+	           text :locale.AddRoster ,onclick :addContactOnly //添加联系人按钮
+           },
 		   {
-			   text :locale.AddRoster ,onclick :addContact //添加联系人按钮
+			   text :"邀请联系人" ,onclick :addContact //添加联系人按钮
 		   },
 		   {
 			   text :"搜索" ,onclick :openSearch //添加联系人按钮
