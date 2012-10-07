@@ -64,5 +64,25 @@ function addToRoster(jid,group) {
 //删除联系人
 function removeRoster(){
 	var r_jid = $(roster_menu.element).data("jid");// 联系人JID
+	
+	
+	var iq = $iq({type: 'set'})
+	.c('query', {xmlns: 'jabber:iq:roster'})
+	.c('item',{jid:r_jid ,subscription:"remove"});//要删除的联系人JID
+	
+	
+	log("正在删除联系人..", iq.toString());
+	
+	
+	connection.sendIQ(iq, afterRemoveRoster);
+	
+}
+
+//删除联系人后
+function afterRemoveRoster(iq){
+	log("已收到删除联系人后信息:", Strophe.serialize(iq));
+	
+	//刷新联系人窗口
+	getRoster();
 }
 
