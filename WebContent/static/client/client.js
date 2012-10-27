@@ -169,7 +169,7 @@ function log(msg, xml) {
 }
 //输出日志
 Strophe.log = function (level, msg) {
-	if(typeof console != "undefined" && console.log) console.log(msg)
+	if(typeof console != "undefined" && console.log) console.log(msg);
 	
 };
 //连接
@@ -347,7 +347,7 @@ function presenceReceived(presence) {
 		}
 	} else if (bareFromJid !== jid) {
 		var contact = $("#roster > div[jid=" + id + "]");
-		var a= $("#roster > div[jid=" + id + "]>a")
+		var a= $("#roster > div[jid=" + id + "]>a");
 		if (contact.length === 1) {
 			var isOnline = contact.text().match(/.+\(online\)/);//是否在线显示
 			if (isOnline && type === "unavailable") {

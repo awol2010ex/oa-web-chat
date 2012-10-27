@@ -89,7 +89,12 @@ function recevieRoomList(iq){
 	var  chat_room_list_grid=$("#chat_room_list_grid").ligerGrid({
 
         columns: [
-            {display:"房间JID",name:"jid", isAllowHide: true ,align:"left"}    ,
+            {
+            	display:"房间JID",name:"jid", isAllowHide: true ,align:"left",
+            	render :function(row,i){
+            		return "<a href=\"javascript:enterRoom('"+row.jid+"')\">"+row.jid+"</a>";
+            	}
+            }    ,
             {display:"房间名称",name:"name", isAllowHide: true ,align:"left"} 
         ],
         data:{"Total":0 ,Rows:[]},
@@ -120,4 +125,24 @@ function recevieRoomList(iq){
 	//房间列表结果
 	chat_room_list_grid_manager.loadData({Total:Rows.length,Rows:Rows});
 	
+}
+
+
+//进入房间
+function enterRoom(jid){//房间JID
+	//进入房间
+	var pres = $pres({
+		id : 'v' + new Date().getTime(),
+		to : jid+"/"+($("#jid").val().split("@")[0])
+	}).c(
+
+	'x', {
+		xmlns : 'http://jabber.org/protocol/muc'
+	}
+
+	);
+	log("正在进入房间", pres.toString());
+	
+	
+	connection.sendIQ(pres);//获取房间列表
 }
