@@ -155,11 +155,8 @@ function formatTime(val) {
 }
 //输出日志
 function log(msg, xml) {
-	var now = new Date();
-	var hours = formatTime(now.getHours());
-	var minutes = formatTime(now.getMinutes());
-	var seconds = formatTime(now.getSeconds());
-	var m = "[" + hours + ":" + minutes + ":" + seconds + "] " + msg;
+	
+	var m = "[" + new DateFormat().format(new Date())+ "] " + msg;
 	if (xml) {
 		xml = xml.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
 		m += ": " + xml;

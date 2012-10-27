@@ -46,7 +46,7 @@
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/ligerui/plugins/ligerToolBar.js"></script> 
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/ligerui/plugins/ligerTree.js"></script> 
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/ligerui/plugins/ligerWindow.js"></script> 
-
+<script type="text/javascript" src="<%=contextPath%>/static/scripts/dateformat.js"></script> 
 <script type="text/javascript">
 
 //this is needed by flXHR to automatically include its dependencies
@@ -170,6 +170,11 @@ $(document).ready(function() {
               </td>
             </tr>
         </table>
+    </div>
+    
+    <!-- 房间列表窗口 -->
+    <div id="chat_room_list_win">
+       <div id="chat_room_list_grid"></div>
     </div>
 </body>
 </html>
