@@ -78,6 +78,10 @@ $(document).ready(function() {
 	
 	f_connect();//连接
 	
+	$(window).unload(function(){
+		disconnect();//断开连接
+	});
+	
 });
 </script>
 </head>
