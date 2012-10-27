@@ -101,6 +101,10 @@ function initComponent(){
 		   
 		   {
 			   text :locale.Disconnect  ,onclick :disconnect //断开连接按钮
+		   },
+		   
+		   {
+			   text :"群聊"  ,onclick :addMUC //加入群聊
 		   }
 	    ]
 		

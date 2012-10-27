@@ -70,6 +70,7 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 <script type="text/javascript" src="<%=contextPath %>/static/client/client.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/search.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/roster.js"></script>
+<script type="text/javascript" src="<%=contextPath %>/static/client/muc.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	//初始化客户端
