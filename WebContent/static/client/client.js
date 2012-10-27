@@ -79,13 +79,13 @@ function initComponent(){
 		title:locale.Roster,  
 		target: $("#roster") ,
 		isResize:true ,
-		width: 400,
+		width: 500,
 		height: 300,
 		modal:false,
 		showMax: true,
 		showToggle: true, 
 		showMin: true,
-		left: $(window).width() -450,
+		left: $(window).width() -550,
 		top: 20,
 		show :false,
 		buttons:[
@@ -105,6 +105,12 @@ function initComponent(){
 		   
 		   {
 			   text :"群聊"  ,onclick :addMUC //加入群聊
+		   },
+		   
+		   {
+			   text :"清空日志"  ,onclick :function(){
+				   $("#logger").empty();
+			   }
 		   }
 	    ]
 		
