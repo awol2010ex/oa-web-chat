@@ -32,7 +32,7 @@ public class SSOJabberSearchManager implements JabberSearchManager {
 		StringBuffer xml = new StringBuffer("<query xmlns='jabber:iq:search'>");
 		if (result != null && result.size() > 0) {
 			for (Map<String, Object> item : result) {
-				xml.append("<item jid='"+(String)item.get("JID")+"'>");
+				xml.append("<item jid='"+String.valueOf(item.get("JID"))+"'>");
 				xml.append("<first>"+(String)item.get("FIRST_NAME")+"</first>");
 				xml.append("<last>"+(String)item.get("LAST_NAME")+"</last>");
 				xml.append("<nick>"+(String)item.get("NICK_NAME")+"</nick>");

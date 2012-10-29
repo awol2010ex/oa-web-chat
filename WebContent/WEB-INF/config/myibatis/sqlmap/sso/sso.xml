@@ -16,8 +16,7 @@
 			 FROM             
 				 (                  
 			   SELECT   
-				             d.*,   
-				 ROW_NUMBER() OVER (PARTITION BY UCASE(DOMAIN_NAME) ORDER BY ROW_CREATED DESC, DOMAIN_ID DESC) AS ROW_NUM  
+				             d.* 
 			 FROM VW_CAS_MSAD_DOMAIN_DEF_T d  
 			 WHERE EXISTS (  SELECT 1 
 			 FROM VW_CAS_MSAD_DOMAIN_LIST_T r  

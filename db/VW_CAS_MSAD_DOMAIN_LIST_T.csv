@@ -1,0 +1,5 @@
+DOMAIN_NAME	HOST_DNS_NAME	HOST_IP_ADDRESS	SVC_PORT_NUM	SVC_WEIGHT	SVC_PRIORITY	SVR_TTL	ROW_GEN_TYPE	ROW_CREATED
+guangzhouhonda.com.cn	phgddc101pa.guangzhouhonda.com.cn	10.251.67.2	389	100	0	327	A	2011-05-27 15:02:29
+guangzhouhonda.com.cn	phgddc20pa.guangzhouhonda.com.cn	10.251.68.129	389	100	0	327	A	2011-05-27 15:02:29
+guangzhouhonda.com.cn	phgddc60pa.guangzhouhonda.com.cn	10.251.68.62	389	100	0	327	A	2011-05-27 15:02:29
+guangzhouhonda.com.cn	phgddc20pa.guangzhouhonda.com.cn	10.251.68.29	389	100	0	327	A	2011-05-27 15:02:29
