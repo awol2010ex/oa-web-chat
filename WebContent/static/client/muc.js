@@ -116,14 +116,66 @@ function enterRoom(jid){//房间JID
 //接收分组对话信息
 function MucMessageReceived(msg){
 	log("已取得分组对话信息：", Strophe.serialize(msg));
-	var jid = $(msg).attr("from");
 	
-	verifyChatTab(jid);
+	
+	
+	
+	var jid = $(msg).attr("from");//发送组
+	
+	verifyMucChatTab(jid);//显示多人对话框
 	
 	var body = $(msg).find("> body");
-	var nick = $(msg).find("> nick").text() ;//发送人
 	if (body.length === 1) {
-		showMessage(jid2id(jid), nick, body.text());
+		showMessage(jid2id(jid), jid.split("/")[1], body.text());
 	}
 	return true;
+}
+
+//验证多人对话框
+function verifyMucChatTab(jid) {
+	var id = jid2id(jid.split("/")[0]);//JID
+	var bareJid = Strophe.getBareJidFromJid(jid.split("/")[0]);
+	$("#tabs").show();
+	
+	var chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
+	if (chat.length === 0) {
+		//$("#tabs").tabs("add", "#chat" + id, bareJid);
+		//添加一个tab
+		tabs_manager.addTabItem({tabid:"chat"+id,text :bareJid}); 
+		
+		//对话窗口
+		chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
+		
+		
+		chat.append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><textarea style='width: 100%;height:110px'/>");
+		chat.data("jid", jid);
+		$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").keydown(function(event) {
+			if (event.which === 13) {
+				event.preventDefault();
+				sendMucMessage($(this).parent().data("jid"), $(this).val());//发送分组信息
+				$(this).val("");
+			}
+		});
+	}
+	//$("#tabs").tabs("select", "#chat" + id);
+	//选中一个tab
+	tabs_manager.selectTabItem("chat" + id);
+	
+	//对话输入框焦点
+	$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").focus();
+}
+
+
+//发送对话信息
+function sendMucMessage(toJid, text) {
+	//showMessage(jid2id(toJid), jid, text);//显示对话信息框
+    var msg = $msg({to: toJid.split("/")[0], "type": "groupchat"}).c('body').t(text);
+    
+    
+    //日志
+    log("正在分组发送信息:", Strophe.serialize(msg));
+    
+    
+    //发送信息
+    connection.send(msg);
 }

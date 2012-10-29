@@ -107,6 +107,12 @@ function initComponent(){
 			   text :"清空日志"  ,onclick :function(){
 				   $("#logger").empty();
 			   }
+		   },
+		   
+		   {
+			   text :"群聊"  ,onclick :function(){
+				   verifyMucChatTab("oa-room@chat."+getMyDomain());//打开群聊窗口
+			   }
 		   }
 	    ]
 		
