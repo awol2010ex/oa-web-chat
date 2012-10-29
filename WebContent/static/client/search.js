@@ -90,7 +90,7 @@ function searchFormReceived(iq){
 			}
 			
 			log("正在提交搜索表单:", Strophe.serialize(iq));
-			waiting = $.ligerDialog.waitting('正在提交搜索表单,请稍候...')
+			waiting = $.ligerDialog.waitting('正在提交搜索表单,请稍候...');
 			
 			connection.sendIQ(iq, searchResultReceived);
 			

@@ -198,8 +198,8 @@ function connect() {
 function userConnected() {
 	getRoster();//取得联系人列表
 	// handle received messages
-	connection.addHandler(messageReceived, null, "message", "chat");
-	
+	connection.addHandler(messageReceived, null, "message", "chat");//个人对话信息
+	connection.addHandler(MucMessageReceived, null, "message", "groupchat");//分组对话信息
 	// handle presence
 	connection.addHandler(presenceReceived, null, "presence");	
 	isDisconnecting = false;

@@ -89,6 +89,8 @@ function recevieRoomList(iq){
 	if(Rows.length==0){
 		log("没有房间");
 	}
+	//进入OA公共群房间
+	enterRoom("oa-room@chat."+getMyDomain());
 	
 }
 
@@ -110,4 +112,18 @@ function enterRoom(jid){//房间JID
 	
 	
 	connection.sendIQ(pres);//获取房间列表
+}
+//接收分组对话信息
+function MucMessageReceived(msg){
+	log("已取得分组对话信息：", Strophe.serialize(msg));
+	var jid = $(msg).attr("from");
+	
+	verifyChatTab(jid);
+	
+	var body = $(msg).find("> body");
+	var nick = $(msg).find("> nick").text() ;//发送人
+	if (body.length === 1) {
+		showMessage(jid2id(jid), nick, body.text());
+	}
+	return true;
 }
