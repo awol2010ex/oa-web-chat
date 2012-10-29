@@ -77,39 +77,6 @@ function recevieRoomList(iq){
 
 	log("已收到房间列表:", Strophe.serialize(iq));
 	
-	$.ligerDialog.open({
-		title : "房间列表",
-		target : $("#chat_room_list_win"),
-		isResize : true,
-		width : 400,
-		height : 300
-	});
-	
-	//房间列表表格
-	var  chat_room_list_grid=$("#chat_room_list_grid").ligerGrid({
-
-        columns: [
-            {
-            	display:"房间JID",name:"jid", isAllowHide: true ,align:"left",
-            	render :function(row,i){
-            		return "<a href=\"javascript:enterRoom('"+row.jid+"')\">"+row.jid+"</a>";
-            	}
-            }    ,
-            {display:"房间名称",name:"name", isAllowHide: true ,align:"left"} 
-        ],
-        data:{"Total":0 ,Rows:[]},
-        sortName: 'id',
-        showTitle: false,
-        dataAction:'local',
-        enabledEdit: false,
-        rownumbers:true,
-        height:"90%",
-        width:"100%",
-        colDraggable:true,
-        usePager: false
-
-    });
-	
 	var Rows =[];//房间列表数据
 	
 	$(iq).find("query > item ").each(function(index){
@@ -119,11 +86,9 @@ function recevieRoomList(iq){
 			name :me.attr("name")
 		});
 	});
-	
-	//房间列表管理器
-	var chat_room_list_grid_manager =$("#chat_room_list_grid").ligerGetGridManager();
-	//房间列表结果
-	chat_room_list_grid_manager.loadData({Total:Rows.length,Rows:Rows});
+	if(Rows.length==0){
+		log("没有房间");
+	}
 	
 }
 

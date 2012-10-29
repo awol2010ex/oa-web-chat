@@ -176,9 +176,5 @@ $(document).ready(function() {
         </table>
     </div>
     
-    <!-- 房间列表窗口 -->
-    <div id="chat_room_list_win">
-       <div id="chat_room_list_grid"></div>
-    </div>
 </body>
 </html>

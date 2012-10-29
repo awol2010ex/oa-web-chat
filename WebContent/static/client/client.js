@@ -104,10 +104,6 @@ function initComponent(){
 		   },
 		   
 		   {
-			   text :"群聊"  ,onclick :addMUC //加入群聊
-		   },
-		   
-		   {
 			   text :"清空日志"  ,onclick :function(){
 				   $("#logger").empty();
 			   }
@@ -148,6 +144,8 @@ function f_connect(){
 	
 	roster_win.active();//恢复联系人窗口
 	connect();//建立服务器的连接
+	
+	
 }
 
 function formatTime(val) {
@@ -207,6 +205,9 @@ function userConnected() {
 	isDisconnecting = false;
 	//$("#roster").dialog("open");	//打开联系人窗口
 	roster_win.active();//恢复联系人窗口
+	
+	
+	addMUC();//加入群聊流程开始
 }
 
 //去掉域名显示JID
