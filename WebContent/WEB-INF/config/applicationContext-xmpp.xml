@@ -42,6 +42,9 @@
           <property name="ssoAuthManager" ref="ssoAuthManager" />
     </bean>
     
+    <!-- 消息日志控制器 -->
+    <bean id="OALogStorageProvider" class="com.oawebchat.oa.log.OALogStorageProvider">
+    </bean>
      
     
     <!-- SSO用户验证模块登记 -->
@@ -50,7 +53,7 @@
           <property name="oaVcardTempPersistenceManager" ref="oaVcardTempPersistenceManager" />
           <property name="oaRosterManager" ref="oaRosterManager" />
           <property name="ssoJabberSearchManager" ref="ssoJabberSearchManager" />
-          
+          <property name="oaLogStorageProvider" ref="OALogStorageProvider" />
     </bean>
 
 

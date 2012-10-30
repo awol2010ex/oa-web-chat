@@ -2,6 +2,7 @@ package com.oawebchat.sso;
 
 import org.apache.vysper.storage.OpenStorageProviderRegistry;
 
+import com.oawebchat.oa.log.OALogStorageProvider;
 import com.oawebchat.oa.roster.OARosterManager;
 import com.oawebchat.oa.vcard.OAVcardTempPersistenceManager;
 import com.oawebchat.sso.usersearch.xep0055.SSOJabberSearchManager;
@@ -16,6 +17,8 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 	private  OARosterManager oaRosterManager;//OA联系人
 	
 	private SSOJabberSearchManager  ssoJabberSearchManager;//Jabber Search 模块
+	
+	private OALogStorageProvider oaLogStorageProvider ;//消息日志控制器 
 	
     public SSOStorageProviderRegistry() {
         
@@ -64,6 +67,15 @@ public class SSOStorageProviderRegistry extends OpenStorageProviderRegistry {
 			SSOJabberSearchManager ssoJabberSearchManager) {
 		this.ssoJabberSearchManager = ssoJabberSearchManager;
 		this.add(ssoJabberSearchManager);//注入Jabber Search 模块
+	}
+
+	public OALogStorageProvider getOaLogStorageProvider() {
+		return oaLogStorageProvider;
+	}
+
+	public void setOaLogStorageProvider(OALogStorageProvider oaLogStorageProvider) {
+		this.oaLogStorageProvider = oaLogStorageProvider;
+		this.add(this.oaLogStorageProvider);//注入消息日志模块
 	}
 
 }
