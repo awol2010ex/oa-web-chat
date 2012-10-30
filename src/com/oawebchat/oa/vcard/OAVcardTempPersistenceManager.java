@@ -30,7 +30,7 @@ public class OAVcardTempPersistenceManager implements
 	public String getVcard(Entity entity) {
 		// TODO Auto-generated method stub
 		
-		String username =staffService .getInnerLoginId(entity.getNode().toUpperCase()); //OA内部登录名
+		String username =staffService .getInnerLoginId(entity.toString().toUpperCase()); //OA内部登录名
 		
 		Map<String,Object> map =new HashMap<String,Object>();
 		
