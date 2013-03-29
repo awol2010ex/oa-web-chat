@@ -2866,7 +2866,7 @@
             {
                 var item = data[rowparm];
                 var rowid = item['__id'];
-                if (!item) continue;
+                if (!item || !rowid) continue;
                 gridhtmlarr.push('<tr');
                 gridhtmlarr.push(' id="' + g._getRowDomId(item, frozen) + '"');
                 gridhtmlarr.push(' class="l-grid-row'); //class start 

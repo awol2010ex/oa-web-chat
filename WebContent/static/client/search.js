@@ -26,17 +26,6 @@ function searchFormReceived(iq){
 	
 	var search_instructions = $(iq).find("query>instructions ").text();// 名称
 	
-	searchWin= $.ligerDialog.open({ 
-		title:"搜索窗口",  
-		target: $("#search_win") ,
-		isResize:true ,
-		width:800,
-		height:300,
-		modal:false,
-		showMax: true,
-		showToggle: true, 
-		showMin: true
-	});
 	var fields=[];//表单字段
 	var i=0;
 	$(iq).find("query").children().each(function(){
@@ -57,15 +46,30 @@ function searchFormReceived(iq){
 	});
 	
 	
+	
+
+
+	searchWin= $.ligerDialog.open({ 
+		title:"搜索窗口",  
+		target: $("#search_win") ,
+		isResize:true ,
+		width:800,
+		height:300,
+		modal:false,
+		showMax: true,
+		showToggle: true, 
+		showMin: true
+	});
+	
+	
 	//搜索表单
-	$("#search_form").ligerForm({
+	$("#search_win").find("#search_form").ligerForm({
 		inputWidth : 100,
 		labelWidth : 90,
 		space : 40,
 		fields:fields
 		
 	});
-	
 	$("#search_btn").ligerButton({
 		text:'搜索',
 		click:function(){
@@ -98,7 +102,9 @@ function searchFormReceived(iq){
 	});
 	
 	$("#search_btn").data("search_fields",fields);//缓存字段列表
-
+	
+	
+	
 }
 
 //返回查询结果
@@ -109,7 +115,7 @@ function searchResultReceived(iq){
 	//获取字段列表
 	var first =$(iq).find("item").first();
 	var columns =[];
-	first.children().each(function(){
+	first.children().each(function(){//搜索字段列表
 		columns.push({
 			
 			display:this.tagName,
@@ -121,7 +127,6 @@ function searchResultReceived(iq){
 	var  search_result_grid=$("#search_result_grid").ligerGrid({
 
         columns: columns,
-        data:{"Total":0 ,Rows:[]},
         sortName: 'id',
         showTitle: false,
         dataAction:'local',
@@ -148,6 +153,7 @@ function searchResultReceived(iq){
 		
 		Rows.push(row);
 	});
+	
 	//导入搜索结果
 	search_result_grid_manager.loadData({Total:Rows.length,Rows:Rows});
 	

@@ -157,7 +157,18 @@ $(document).ready(function() {
         <table width="95%" height="90%">
             <tr>
               <td width="40%" valign="top" align="left">
-                <form id="search_form" />
+                <table>
+                  <tr>
+                    <td>
+                      <form id="search_form" ></form>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <div id="search_btn"></div>
+                    </td>
+                  </tr>
+                </table>
               </td>
               
               <td width="60%" valign="top" align="left" rowspan="2">
@@ -166,12 +177,6 @@ $(document).ready(function() {
               </td>
               
             
-            </tr>
-            <tr>
-              <td valign="top" align="left">
-                  <div id="search_btn"></div>
-                  
-              </td>
             </tr>
         </table>
     </div>
