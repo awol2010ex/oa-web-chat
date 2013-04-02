@@ -13,7 +13,8 @@
 	href="<%=contextPath%>/static/skins/ligerui-icons.css" />
 <link rel="stylesheet" type="text/css"
 	href="<%=contextPath%>/static/skins/Aqua/css/ligerui-all.css" />
-
+<link rel="stylesheet" type="text/css"
+	href="<%=contextPath%>/static/skins/base.css" />
 
 <script type="text/javascript" src="<%=contextPath %>/static/scripts/jquery-1.7.2.min.js"></script>
 

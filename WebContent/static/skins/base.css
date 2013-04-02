@@ -1,0 +1,33 @@
+a{
+text-decoration: none;
+}
+
+.chatBox_sendMsgButton {
+float: right;
+width: 64px;
+height: 22px;
+line-height: 20px;
+margin: 5px 0 4px;
+background: url('../images/sprite.png') no-repeat 0 -534px;
+overflow: hidden;
+text-align: center;
+display: block;
+-webkit-tap-highlight-color: rgba(6,6,6,0.3);
+}
+
+.chatBox_closeButton {
+float: right;
+margin: 5px 5px 4px 0;
+line-height: 20px;
+width: 69px;
+height: 22px;
+background: url('../images/sprite.png') 0 -702px no-repeat;
+overflow: hidden;
+text-align: center;
+display: block;
+-webkit-tap-highlight-color: rgba(6,6,6,0.3);
+}
+
+.chatBox_closeButton:hover {
+background: url('../images/sprite.png') 0 -660px no-repeat;
+}

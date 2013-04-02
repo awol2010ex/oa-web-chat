@@ -217,21 +217,21 @@ function userConnected() {
 }
 
 //去掉域名显示JID
-function jid2id(jid) {
-	return Strophe.getBareJidFromJid(jid).replace("@", "AT").replace(/\./g, "_");
+function jid2id(_jid) {
+	return Strophe.getBareJidFromJid(_jid).replace("@", "AT").replace(/\./g, "_");
 }
 
 
 //接收并显示信息
 function messageReceived(msg) {
 	log("已取得对话信息：", Strophe.serialize(msg));
-	var jid = $(msg).attr("from");
+	var _jid = $(msg).attr("from");
 	
-	verifyChatTab(jid);
+	verifyChatTab(_jid);
 	
 	var body = $(msg).find("> body");
 	if (body.length === 1) {
-		showMessage(jid2id(jid), jid, body.text());
+		showMessage(jid2id(_jid), _jid, body.text());
 	}
 	return true;
 }
@@ -239,12 +239,17 @@ function messageReceived(msg) {
 function showMessage(tabId, authorJid, text) {
 	var bareJid = Strophe.getBareJidFromJid(authorJid);
 	//var chat = $("#chat" + tabId + " > div");
-	var chatcontent =$(".l-tab-content > div[tabid ='chat"+tabId+"'] >div");//对话内容DIV
+	var chatcontent =$(".l-tab-content > div[tabid ='chat"+tabId+"'] >div").first();//对话内容DIV
 	
 	if (chatcontent.length === 0) {
 		return;
 	}
-	chatcontent.append("<div style='padding:5px'><b>" + bareJid + "</b>: " + text + "</div>");
+	if(bareJid==jid)
+	    chatcontent.append("<div style='padding:5px;color:blue;'><b>" + bareJid + "</b>: " + new DateFormat().format(new Date()) + "</div>");
+	else
+		chatcontent.append("<div style='padding:5px;color:green;'><b>" + bareJid + "</b>: " + new DateFormat().format(new Date()) + "</div>");
+	
+	chatcontent.append("<div style='padding:5px'>&nbsp;&nbsp;"+text+"</div>");
 	chatcontent.get(0).scrollTop = chatcontent.get(0).scrollHeight;
 	//$("#tabs").tabs("select", "#chat" + tabId);
 	//选中一个tab
@@ -256,9 +261,9 @@ function showMessage(tabId, authorJid, text) {
 
 
 //验证对话框
-function verifyChatTab(jid) {
-	var id = jid2id(jid);//JID
-	var bareJid = Strophe.getBareJidFromJid(jid);
+function verifyChatTab(_jid) {
+	var id = jid2id(_jid);//JID
+	var bareJid = Strophe.getBareJidFromJid(_jid);
 	$("#tabs").show();
 	
 	var chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
@@ -272,7 +277,11 @@ function verifyChatTab(jid) {
 		
 		
 		chat.append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><textarea style='width: 100%;height:110px'/>");
-		chat.data("jid", jid);
+		
+		
+		chat.append("<div style='width:100%;height:30px;text-align:right'> <a href='###' class='chatBox_closeButton'  onclick=\"closeTab('chat"+id+"')\" >关　闭</a></div>");
+		
+		chat.data("jid", _jid);
 		$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").keydown(function(event) {
 			if (event.which === 13) {
 				event.preventDefault();
@@ -288,7 +297,10 @@ function verifyChatTab(jid) {
 	//对话输入框焦点
 	$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").focus();
 }
-
+//关闭对话框
+function closeTab(id){
+	tabs_manager.removeTabItem(id);
+}
 //断开连接
 function disconnect() {
 	isDisconnecting = true;
