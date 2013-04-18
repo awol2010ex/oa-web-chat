@@ -6,8 +6,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
 
+//this is needed by flXHR to automatically include its dependencies
+window.basePath ="<%=request.getContextPath() %>";
 
+if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/flxhr/";
+</script>
+<!-- kindeditor -->
+<link rel="stylesheet" href="<%=contextPath %>/static/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="<%=contextPath %>/static/kindeditor/plugins/code/prettify.css" />
+<script charset="utf-8" src="<%=contextPath %>/static/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="<%=contextPath %>/static/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="<%=contextPath %>/static/kindeditor/plugins/code/prettify.js"></script>
+<!--  -->
 
 <link rel="stylesheet" type="text/css"
 	href="<%=contextPath%>/static/skins/ligerui-icons.css" />
@@ -48,13 +60,7 @@
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/ligerui/plugins/ligerTree.js"></script> 
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/ligerui/plugins/ligerWindow.js"></script> 
 <script type="text/javascript" src="<%=contextPath%>/static/scripts/dateformat.js"></script> 
-<script type="text/javascript">
 
-//this is needed by flXHR to automatically include its dependencies
-window.basePath ="<%=request.getContextPath() %>";
-
-if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/flxhr/";
-</script>
 <script type="text/javascript" src="<%=contextPath %>/static/resources/flxhr/flensed.js"></script>
 
 
@@ -72,6 +78,13 @@ if(window.flensed) window.flensed.base_path="<%=contextPath %>/static/resources/
 <script type="text/javascript" src="<%=contextPath %>/static/client/search.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/roster.js"></script>
 <script type="text/javascript" src="<%=contextPath %>/static/client/muc.js"></script>
+
+
+
+
+
+
+
 <script type="text/javascript">
 $(document).ready(function() {
 	//初始化客户端

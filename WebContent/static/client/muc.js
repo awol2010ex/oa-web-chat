@@ -96,11 +96,11 @@ function recevieRoomList(iq){
 
 
 //进入房间
-function enterRoom(jid){//房间JID
+function enterRoom(_jid){//房间JID
 	//进入房间
 	var pres = $pres({
 		id : 'v' + new Date().getTime(),
-		to : jid+"/"+($("#jid").val().split("@")[0])
+		to : _jid+"/"+($("#jid").val().split("@")[0])
 	}).c(
 
 	'x', {
@@ -120,21 +120,21 @@ function MucMessageReceived(msg){
 	
 	
 	
-	var jid = $(msg).attr("from");//发送组
+	var _jid = $(msg).attr("from");//发送组
 	
-	verifyMucChatTab(jid);//显示多人对话框
+	verifyMucChatTab(_jid);//显示多人对话框
 	
 	var body = $(msg).find("> body");
 	if (body.length === 1) {
-		showMessage(jid2id(jid), jid.split("/")[1], body.text());
+		showMessage(jid2id(_jid), _jid.split("/")[1], body.text());
 	}
 	return true;
 }
 
 //验证多人对话框
-function verifyMucChatTab(jid) {
-	var id = jid2id(jid.split("/")[0]);//JID
-	var bareJid = Strophe.getBareJidFromJid(jid.split("/")[0]);
+function verifyMucChatTab(_jid) {
+	var id = jid2id(_jid.split("/")[0]);//JID
+	var bareJid = Strophe.getBareJidFromJid(_jid.split("/")[0]);
 	$("#tabs").show();
 	
 	var chat =$(".l-tab-content > div[tabid ='chat"+id+"']");
@@ -148,12 +148,36 @@ function verifyMucChatTab(jid) {
 		
 		
 		chat.append("<div style='height: 290px; margin-bottom: 10px; overflow: auto;'></div><textarea style='width: 100%;height:110px'/>");
-		chat.data("jid", jid);
+		chat.data("jid", _jid);
+		
+		/*
 		$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").keydown(function(event) {
 			if (event.which === 13) {
 				event.preventDefault();
 				sendMucMessage($(this).parent().data("jid"), $(this).val());//发送分组信息
 				$(this).val("");
+			}
+		});
+		*/
+		KindEditor.create($(".l-tab-content > div[tabid =chat'"+id+"']>textarea")[0], {
+			cssPath : window.basePath+'static/kindeditor/plugins/code/prettify.css',
+			allowFileManager : false,
+			items : [
+			            'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link'
+			],
+			afterCreate : function() {
+				var self = this;
+				//ctrl+Enter 发送消息
+				KindEditor.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					
+					sendMucMessage($(self.srcElement).parent().data("jid"),self.html());
+					
+					self.html("");
+					
+				});
 			}
 		});
 	}

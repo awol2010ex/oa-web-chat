@@ -256,7 +256,7 @@ function showMessage(tabId, authorJid, text) {
 	tabs_manager.selectTabItem("chat" + tabId);
 	
 	//对话输入框焦点
-	$(".l-tab-content > div[tabid ='chat"+tabId+"']>textarea").focus();
+	//$(".l-tab-content > div[tabid ='chat"+tabId+"']>textarea").focus();
 }
 
 
@@ -282,11 +282,34 @@ function verifyChatTab(_jid) {
 		chat.append("<div style='width:100%;height:30px;text-align:right'> <a href='###' class='chatBox_closeButton'  onclick=\"closeTab('chat"+id+"')\" >关　闭</a></div>");
 		
 		chat.data("jid", _jid);
+		/*
 		$(".l-tab-content > div[tabid =chat'"+id+"']>textarea").keydown(function(event) {
 			if (event.which === 13) {
 				event.preventDefault();
 				sendMessage($(this).parent().data("jid"), $(this).val());
 				$(this).val("");
+			}
+		});
+		*/
+		KindEditor.create($(".l-tab-content > div[tabid =chat'"+id+"']>textarea")[0], {
+			cssPath : window.basePath+'static/kindeditor/plugins/code/prettify.css',
+			allowFileManager : false,
+			items : [
+			            'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'image', 'link'
+			],
+			afterCreate : function() {
+				var self = this;
+				//ctrl+Enter 发送消息
+				KindEditor.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					
+					sendMessage($(self.srcElement).parent().data("jid"),self.html());
+					
+					self.html("");
+					
+				});
 			}
 		});
 	}
