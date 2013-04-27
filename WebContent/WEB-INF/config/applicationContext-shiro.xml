@@ -19,6 +19,7 @@
 				/views/*.jsp  = authc
 				/views/index.jsp  = anon
 				/static/**   = anon
+				/druid/**   = anon
             </value>
 		</property>
 	</bean>
